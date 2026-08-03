@@ -1,0 +1,6 @@
+{
+  "name": "Resumight",
+  "description": "Create polished resumes in minutes and tailor them to specific job postings with a light glassmorphism design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
