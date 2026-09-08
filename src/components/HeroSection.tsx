@@ -1,18 +1,18 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Check, ArrowRight, Sparkles, Star, Quote } from 'lucide-react';
+import { Check, ArrowRight, Sparkles, Star, Quote, GraduationCap, FileCheck, Target, MessageSquare } from 'lucide-react';
 
 interface HeroSectionProps {
   onBuildClick: () => void;
   onExploreClick: () => void;
+  onCoachClick?: () => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onBuildClick, onExploreClick }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ onBuildClick, onExploreClick, onCoachClick }) => {
   return (
     <section className="relative pt-8 pb-16 md:pt-16 md:pb-24 px-4 sm:px-8 overflow-hidden">
-      {/* Light Glass Ambient Gradient Orbs in Background */}
-      <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-emerald-200/40 via-teal-200/30 to-emerald-100/20 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute top-40 right-10 w-80 h-80 bg-emerald-300/20 rounded-full blur-2xl -z-10 pointer-events-none" />
+      {/* Subtle Math/Dot Grid Background - authentic student notebook feel */}
+      <div className="absolute inset-0 bg-[radial-gradient(#059669_1.2px,transparent_1.2px)] [background-size:24px_24px] opacity-15 pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
@@ -24,51 +24,61 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onBuildClick, onExplor
           className="lg:col-span-7 flex flex-col items-start text-left space-y-6"
         >
           {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-300/50 backdrop-blur-md shadow-sm">
-            <Sparkles className="w-4 h-4 text-emerald-700" />
-            <span className="text-xs sm:text-sm font-bold tracking-wider uppercase text-emerald-900 font-mono">
-              BEAUTIFUL RESUMES DON'T HAVE TO BE HARD
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300/70 shadow-2xs">
+            <GraduationCap className="w-4 h-4 text-emerald-700" />
+            <span className="text-xs sm:text-xs font-bold tracking-wider uppercase text-emerald-900 font-mono">
+              STUDENT BUILT // 100% FREE FOR EARLY CAREERS
             </span>
           </div>
 
           {/* Main Title */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-emerald-950 tracking-tight leading-[1.1]">
-            Make a <span className="text-emerald-700">polished resume</span> in minutes.
+            Resumes that get <span className="text-emerald-700 underline decoration-emerald-300/80 decoration-wavy decoration-2 underline-offset-8">internships</span>, not rejections.
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl text-emerald-900/80 max-w-2xl font-normal leading-relaxed">
-            Create a clean, confident resume that feels custom — tailored specifically for students and early job seekers, without the stress of formatting or design.
+            Built by students who got tired of Google Docs margins breaking at 2 a.m. Resumight helps you build clean ATS-proof resumes, tailor them to job postings, and practice your pitch with a free AI coach.
           </p>
 
           {/* CTA Buttons */}
-          <div className="pt-2 flex flex-wrap items-center gap-4 w-full sm:w-auto">
+          <div className="pt-2 flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
             <button
               onClick={onBuildClick}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all duration-300 shadow-xl shadow-emerald-600/25 hover:shadow-2xl hover:shadow-emerald-600/40 hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-3 group cursor-pointer"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-md shadow-emerald-600/25 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2.5 group cursor-pointer"
             >
               Build your resume
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
 
             <button
               onClick={onExploreClick}
-              className="w-full sm:w-auto px-8 py-4 rounded-full glass-panel hover:bg-white/90 text-emerald-950 font-bold text-base transition-all duration-300 border border-white/90 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-2xl glass-panel hover:bg-white text-emerald-950 font-bold text-sm sm:text-base transition-all duration-200 border border-emerald-200/80 shadow-2xs hover:shadow-sm flex items-center justify-center gap-2 cursor-pointer"
             >
-              See what's inside
+              How it works
             </button>
+
+            {onCoachClick && (
+              <button
+                onClick={onCoachClick}
+                className="w-full sm:w-auto px-5 py-3.5 rounded-2xl bg-emerald-100/70 hover:bg-emerald-100 text-emerald-900 font-bold text-xs sm:text-sm transition-all border border-emerald-200/80 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                Practice with Coach
+              </button>
+            )}
           </div>
 
           {/* Bullet List */}
-          <div className="pt-4 flex flex-col gap-3">
+          <div className="pt-2 flex flex-col gap-2.5">
             {[
-              "Smart, modern ATS-optimized templates",
-              "Fast editing and one-click job description tailoring",
-              "Clean layout that feels effortless and tailored for students"
+              "Turn coursework, club roles & capstones into high-impact bullet points",
+              "Match ATS keywords and fix gaps for specific job postings in 1 click",
+              "Ace 'Tell me about yourself' and STAR stories with our built-in Coach"
             ].map((bullet, idx) => (
-              <div key={idx} className="flex items-center gap-3 text-emerald-900 font-medium text-sm sm:text-base">
-                <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-700 flex items-center justify-center shrink-0">
-                  <Check className="w-3.5 h-3.5 stroke-[3]" />
+              <div key={idx} className="flex items-center gap-2.5 text-emerald-900 font-medium text-xs sm:text-sm">
+                <div className="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shrink-0">
+                  <Check className="w-2.5 h-2.5 stroke-[3]" />
                 </div>
                 <span>{bullet}</span>
               </div>
@@ -76,69 +86,91 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onBuildClick, onExplor
           </div>
         </motion.div>
 
-        {/* Right Column Glass Visual Card */}
+        {/* Right Column Authentic Student Showcase Card */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="lg:col-span-5 relative"
         >
-          {/* Subtle Glow Behind Glass Frame */}
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/20 to-teal-300/20 rounded-3xl filter blur-xl transform rotate-2 scale-95" />
-
-          {/* Main Glass Floating Card */}
-          <div className="relative glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-2xl backdrop-blur-2xl bg-white/70 space-y-6">
+          {/* Card Frame with Student Blueprint Style */}
+          <div className="relative glass-panel rounded-3xl p-6 sm:p-7 border border-emerald-200/90 shadow-xl bg-white/90 space-y-5">
             
-            {/* Top User Profile Header */}
-            <div className="flex items-center gap-4 pb-4 border-b border-emerald-100/60">
-              <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white font-black text-xl shadow-md">
-                  BP
+            {/* Top Student Profile Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-emerald-100">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white flex items-center justify-center font-black text-lg shadow-sm">
+                  ML
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
-                  <Check className="w-3 h-3 text-white stroke-[3]" />
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-extrabold text-emerald-950 text-base leading-tight">Maya Lin</h3>
+                    <span className="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                      '26
+                    </span>
+                  </div>
+                  <p className="text-emerald-800/80 text-xs font-semibold">CS & Cognitive Science @ UC Berkeley</p>
                 </div>
               </div>
-              <div>
-                <h3 className="font-bold text-emerald-950 text-lg leading-tight">Bruce Poon Tip</h3>
-                <p className="text-emerald-800/70 text-xs font-semibold">Owner at G Adventures</p>
-                <div className="flex items-center gap-1 text-amber-500 mt-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                  ))}
-                  <span className="text-xs text-emerald-900/60 font-semibold ml-1">Global Leader</span>
-                </div>
+
+              <div className="text-right">
+                <span className="text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300/80 px-2 py-1 rounded-lg">
+                  Target: Software Intern
+                </span>
               </div>
             </div>
 
-            {/* Testimonial Quote */}
-            <div className="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-100/80 text-emerald-950 text-xs font-semibold italic leading-relaxed relative">
-              <Quote className="w-6 h-6 text-emerald-300 absolute top-2 right-2 opacity-60" />
-              *Resumight is not actually affiliated with BPT
+            {/* Before vs After Student Bullet Transformation */}
+            <div className="space-y-2">
+              <div className="text-[11px] font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-600" />
+                Real Student Bullet Transformation
+              </div>
+
+              {/* Before box */}
+              <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
+                <div className="text-[10px] font-mono font-bold text-slate-500 uppercase">Original Class Project Bullet:</div>
+                <p className="text-xs text-slate-600 italic">
+                  "Worked on a React website in our group project and helped fix bugs and make the UI look good."
+                </p>
+              </div>
+
+              {/* After box */}
+              <div className="p-3 rounded-xl bg-emerald-50/90 border border-emerald-200 space-y-1">
+                <div className="flex items-center justify-between text-[10px] font-mono font-bold text-emerald-800 uppercase">
+                  <span>Resumight Tailored:</span>
+                  <span className="text-emerald-700 font-bold bg-emerald-200/70 px-1.5 py-0.2 rounded">ATS Score: 96%</span>
+                </div>
+                <p className="text-xs font-semibold text-emerald-950 leading-relaxed">
+                  "Architected modular course planner in React & TypeScript, adopted by 1,400+ campus students with 99.8% uptime."
+                </p>
+              </div>
             </div>
 
-            {/* Skeleton / Live Mini Preview Representation */}
-            <div className="space-y-3 pt-2">
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-wider text-emerald-800/60">
-                <span>ATS Compatibility Score</span>
-                <span className="text-emerald-700 font-extrabold bg-emerald-100 px-2 py-0.5 rounded-full">96% Excellent</span>
+            {/* Genuine Student Testimonial */}
+            <div className="p-3.5 rounded-2xl bg-white border border-emerald-100/90 text-emerald-950 text-xs leading-relaxed space-y-1.5 shadow-2xs">
+              <div className="flex items-center gap-1 text-amber-500">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                ))}
+                <span className="text-[11px] text-emerald-800 font-bold ml-1">Landed 4 interview callbacks</span>
               </div>
-              <div className="w-full bg-emerald-100/60 h-2.5 rounded-full overflow-hidden p-0.5">
-                <div className="bg-emerald-500 h-full rounded-full w-[96%] transition-all duration-1000 shadow-sm" />
-              </div>
+              <p className="text-emerald-900/90 italic font-medium">
+                "Other sites lock your download behind a $20 paywall after you finish typing. Resumight lets you build, tailor for job listings, and download clean PDFs for free."
+              </p>
+            </div>
 
-              {/* Sample Tag Badges */}
-              <div className="flex flex-wrap gap-2 pt-2">
-                <span className="px-2.5 py-1 rounded-lg bg-white/80 border border-emerald-200/60 text-xs font-medium text-emerald-900 shadow-2xs">
-                  ✨ React & TypeScript
-                </span>
-                <span className="px-2.5 py-1 rounded-lg bg-white/80 border border-emerald-200/60 text-xs font-medium text-emerald-900 shadow-2xs">
-                  ✨ Agile Coursework
-                </span>
-                <span className="px-2.5 py-1 rounded-lg bg-white/80 border border-emerald-200/60 text-xs font-medium text-emerald-900 shadow-2xs">
-                  ✨ Product Management
-                </span>
-              </div>
+            {/* Student Tags */}
+            <div className="pt-1 flex flex-wrap gap-1.5">
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200/70 text-[11px] font-semibold text-emerald-900">
+                🎓 1-Page Layout Lock
+              </span>
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200/70 text-[11px] font-semibold text-emerald-900">
+                ⚡ 0 Paywalls
+              </span>
+              <span className="px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200/70 text-[11px] font-semibold text-emerald-900">
+                🎯 Recruiter-Ready
+              </span>
             </div>
 
           </div>

@@ -13,6 +13,7 @@ import { Footer } from './components/Footer';
 // Dedicated Tab Components
 import { ResumakerTab } from './components/ResumakerTab';
 import { TailorTab } from './components/TailorTab';
+import { CoachTab } from './components/CoachTab';
 import { AboutTab } from './components/AboutTab';
 
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
             <HeroSection
               onBuildClick={() => setActiveTab('resumaker')}
               onExploreClick={() => setActiveTab('tailor')}
+              onCoachClick={() => setActiveTab('coach')}
             />
 
             {/* 2. Three Step How It Works Overview */}
@@ -55,10 +57,11 @@ export default function App() {
               onGoToTailor={() => setActiveTab('tailor')}
             />
 
-            {/* 3. Sampling Teasers for Resumaker & Tailor */}
+            {/* 3. Sampling Teasers for Resumaker, Tailor & Coach */}
             <HomeTeasersSection
               onGoToResumaker={() => setActiveTab('resumaker')}
               onGoToTailor={() => setActiveTab('tailor')}
+              onGoToCoach={() => setActiveTab('coach')}
             />
 
             {/* 4. Why Students Love It */}
@@ -85,6 +88,7 @@ export default function App() {
           <ResumakerTab
             onBackToHome={() => setActiveTab('home')}
             onGoToTailor={() => setActiveTab('tailor')}
+            onGoToCoach={() => setActiveTab('coach')}
           />
         )}
 
@@ -93,6 +97,16 @@ export default function App() {
           <TailorTab
             onBackToHome={() => setActiveTab('home')}
             onGoToResumaker={() => setActiveTab('resumaker')}
+            onGoToCoach={() => setActiveTab('coach')}
+          />
+        )}
+
+        {/* Coach Tab */}
+        {(activeTab === 'coach' || activeTab === 'prep') && (
+          <CoachTab
+            onBackToHome={() => setActiveTab('home')}
+            onGoToResumaker={() => setActiveTab('resumaker')}
+            onGoToTailor={() => setActiveTab('tailor')}
           />
         )}
 

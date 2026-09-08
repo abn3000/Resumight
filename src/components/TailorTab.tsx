@@ -1,23 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'motion/react';
-import { Target, Sparkles, Upload, CheckCircle2, AlertCircle, ArrowRight, RefreshCw, Copy, Check, ArrowLeft, Wand2 } from 'lucide-react';
+import { Target, Sparkles, Upload, CheckCircle2, AlertCircle, ArrowRight, RefreshCw, Copy, Check, ArrowLeft, Wand2, Loader2, FileUp, FileText } from 'lucide-react';
 
 interface TailorTabProps {
   onBackToHome: () => void;
   onGoToResumaker: () => void;
+  onGoToCoach?: () => void;
+  onGoToPrep?: () => void;
 }
 
-export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResumaker }) => {
+export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResumaker, onGoToCoach, onGoToPrep }) => {
+  const handleCoach = onGoToCoach || onGoToPrep;
   const [resumeText, setResumeText] = useState("");
   const [jobDescription, setJobDescription] = useState("");
 
   const SAMPLE_RESUME = "Alex Morgan\nProduct Design & CS Major at UC Berkeley\n\nExperience:\n- Built React components for campus student app.\n- Conducted user interviews with 15 students to refine UX.\n- Collaborated with software engineers using Git and Figma.";
 
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
+  const [uploadFileName, setUploadFileName] = useState<string | null>(null);
   const [analyzed, setAnalyzed] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [copiedResume, setCopiedResume] = useState(false);
   const [copiedBulletIndex, setCopiedBulletIndex] = useState<number | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [tailoredResult, setTailoredResult] = useState<{
     matchScore: number;
@@ -82,9 +89,63 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
     }
   };
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
+  const processUploadedFile = async (file: File) => {
+    if (!file) return;
+
+    const lowerName = file.name.toLowerCase();
+    setUploadFileName(file.name);
+    setError(null);
+
+    // If it's a PDF, call our Gemini /api/parse-pdf endpoint to get the full formatted text
+    if (lowerName.endsWith('.pdf') || file.type === 'application/pdf') {
+      setIsUploadingFile(true);
+      try {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+          const result = e.target?.result as string;
+          if (!result) {
+            setError('Could not read PDF file.');
+            setIsUploadingFile(false);
+            return;
+          }
+
+          try {
+            const res = await fetch('/api/parse-pdf', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                fileBase64: result,
+                mimeType: 'application/pdf',
+                fileName: file.name,
+              }),
+            });
+
+            const data = await res.json();
+            if (data.success && (data.rawResumeText || data.updatedFields)) {
+              let textToSet = data.rawResumeText;
+              if (!textToSet && data.updatedFields) {
+                const u = data.updatedFields;
+                textToSet = `${u.name || ''}\n${u.role || ''} • ${u.email || ''} • ${u.phone || ''}\n${u.location || ''} • ${u.linkedin || ''}\n\nSUMMARY\n${u.summary || ''}\n\nEXPERIENCE\n${u.experience || ''}\n\nEDUCATION\n${u.education || ''}\n\nSKILLS\n${u.skills || ''}\n\nACTIVITIES\n${u.activities || ''}`.trim();
+              }
+              setResumeText(textToSet || '');
+            } else {
+              setError(data.error || 'Failed to extract text from PDF.');
+            }
+          } catch (apiErr) {
+            console.error('PDF parse error:', apiErr);
+            setError('Failed to connect to AI server to parse PDF.');
+          } finally {
+            setIsUploadingFile(false);
+          }
+        };
+        reader.readAsDataURL(file);
+      } catch (err) {
+        console.error(err);
+        setError('Error reading PDF file.');
+        setIsUploadingFile(false);
+      }
+    } else {
+      // Plain text or markdown
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
@@ -92,6 +153,22 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
         }
       };
       reader.readAsText(file);
+    }
+  };
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      processUploadedFile(file);
+    }
+  };
+
+  const handleDropResume = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processUploadedFile(e.dataTransfer.files[0]);
     }
   };
 
@@ -113,18 +190,33 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
             Fit your resume to any job posting.
           </h1>
           <p className="text-emerald-900/80 text-sm sm:text-base font-normal max-w-2xl">
-            Paste your resume bullets and the target job description. Tailor identifies ATS keyword gaps, calculates your match score, and rewrites bullet points for maximum impact.
+            Upload your PDF resume or paste your bullets and target job description. Tailor identifies ATS keyword gaps, calculates your match score, and rewrites bullet points for maximum impact.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={onBackToHome}
-            className="px-4 py-2.5 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-2 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Home
           </button>
+          <button
+            onClick={onGoToResumaker}
+            className="px-3.5 py-2 rounded-xl bg-emerald-100/80 hover:bg-emerald-200/90 text-xs font-bold text-emerald-950 border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
+          >
+            Resumaker
+          </button>
+          {handleCoach && (
+            <button
+              onClick={handleCoach}
+              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+              Coach
+            </button>
+          )}
         </div>
       </motion.div>
 
@@ -146,30 +238,90 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 Your Resume Text
               </h2>
               
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    try {
+                      const stored = localStorage.getItem('resumight_resume_data');
+                      if (stored) {
+                        const parsed = JSON.parse(stored);
+                        const formatted = `${parsed.name || ''}\n${parsed.role ? parsed.role + ' • ' : ''}${parsed.email || ''} • ${parsed.phone || ''}\n${parsed.location || ''} • ${parsed.linkedin || ''}\n\nSUMMARY\n${parsed.summary || ''}\n\nEXPERIENCE\n${parsed.experience || ''}\n\nEDUCATION\n${parsed.education || ''}\n\nSKILLS\n${parsed.skills || ''}\n\nACTIVITIES\n${parsed.activities || ''}`.trim();
+                        setResumeText(formatted);
+                      } else {
+                        setResumeText(SAMPLE_RESUME);
+                      }
+                    } catch (e) {
+                      setResumeText(SAMPLE_RESUME);
+                    }
+                  }}
+                  className="text-xs text-emerald-800 hover:text-emerald-950 font-bold px-3 py-1 rounded-lg bg-emerald-100/70 hover:bg-emerald-200/80 border border-emerald-200 cursor-pointer transition-colors"
+                >
+                  Import from Resumaker
+                </button>
                 <button
                   type="button"
                   onClick={() => setResumeText(SAMPLE_RESUME)}
                   className="text-xs text-emerald-800 hover:text-emerald-950 font-bold px-3 py-1 rounded-lg bg-emerald-100/70 border border-emerald-200 cursor-pointer"
                 >
-                  Load sample
+                  Sample
                 </button>
                 {/* Upload file option */}
-                <label className="text-xs text-emerald-800 hover:text-emerald-950 font-bold flex items-center gap-1.5 cursor-pointer bg-emerald-100/70 px-3 py-1 rounded-lg border border-emerald-200">
-                  <Upload className="w-3.5 h-3.5 text-emerald-600" />
-                  Upload .txt resume
-                  <input type="file" accept=".txt,.md" onChange={handleFileUpload} className="hidden" />
-                </label>
+                <button
+                  type="button"
+                  disabled={isUploadingFile}
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-xs text-emerald-800 hover:text-emerald-950 font-bold flex items-center gap-1.5 cursor-pointer bg-emerald-100/70 px-3 py-1 rounded-lg border border-emerald-200 disabled:opacity-50"
+                >
+                  {isUploadingFile ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                      Parsing PDF...
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-3.5 h-3.5 text-emerald-600" />
+                      Upload PDF / Text
+                    </>
+                  )}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf,.txt,.md,.docx"
+                  onChange={handleFileUpload}
+                  className="hidden"
+                />
               </div>
             </div>
 
-            <textarea
-              rows={5}
-              value={resumeText}
-              onChange={(e) => setResumeText(e.target.value)}
-              className="w-full p-4 rounded-2xl glass-input text-emerald-950 text-xs sm:text-sm font-mono leading-relaxed resize-none"
-              placeholder="Paste your resume text here..."
-            />
+            <div
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDragging(true);
+              }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={handleDropResume}
+              className={`relative rounded-2xl transition-all ${
+                isDragging ? 'ring-2 ring-emerald-500 bg-emerald-50/80' : ''
+              }`}
+            >
+              <textarea
+                rows={6}
+                value={resumeText}
+                onChange={(e) => setResumeText(e.target.value)}
+                className="w-full p-4 rounded-2xl glass-input text-emerald-950 text-xs sm:text-sm font-mono leading-relaxed resize-none"
+                placeholder="Paste your resume text here, or drag & drop a PDF resume directly into this box..."
+              />
+              {isUploadingFile && (
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center gap-2 z-10">
+                  <Loader2 className="w-6 h-6 text-emerald-600 animate-spin" />
+                  <span className="text-xs font-bold text-emerald-950">
+                    Extracting full resume from {uploadFileName || 'PDF'} with Gemini AI...
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Job Description Input Block */}
@@ -413,7 +565,7 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
             )}
           </div>
 
-          <div className="pt-4 border-t border-emerald-100 flex items-center justify-between">
+          <div className="pt-4 border-t border-emerald-100 flex flex-wrap items-center justify-between gap-3">
             <button
               onClick={onGoToResumaker}
               className="text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors flex items-center gap-1 cursor-pointer"
@@ -421,6 +573,16 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
               <Wand2 className="w-3.5 h-3.5 text-emerald-600" />
               Need a fresh resume draft? Open Resumaker →
             </button>
+
+            {handleCoach && (
+              <button
+                onClick={handleCoach}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+                Practice with Coach →
+              </button>
+            )}
           </div>
         </motion.div>
 

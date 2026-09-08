@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Mic, MicOff, Check, FileText, Palette, Layout, Wand2, Sparkles, Download, X, Copy, Printer, ArrowLeft } from 'lucide-react';
+import { Mic, MicOff, Check, FileText, Palette, Layout, Wand2, Sparkles, Download, X, Copy, Printer, ArrowLeft, Upload, FileUp, Loader2, FileType } from 'lucide-react';
 import { NavTab } from '../types';
 
 interface ResumakerTabProps {
   onBackToHome: () => void;
   onGoToTailor: () => void;
+  onGoToCoach?: () => void;
+  onGoToPrep?: () => void;
 }
 
 const EMPTY_FORM_DATA = {
@@ -36,11 +38,21 @@ const SAMPLE_FORM_DATA = {
   activities: 'President @ Berkeley UI/UX Club • Hackathon Winner 2025 • Dean\'s Honor List',
 };
 
-export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoToTailor }) => {
+export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoToTailor, onGoToCoach, onGoToPrep }) => {
+  const handleCoach = onGoToCoach || onGoToPrep;
   // Form State
   const [activeFormTab, setActiveFormTab] = useState<'basic' | 'exp' | 'edu' | 'skills' | 'activities'>('basic');
   const [formData, setFormData] = useState({ ...EMPTY_FORM_DATA });
   const [editedFields, setEditedFields] = useState<Record<string, boolean>>({});
+
+  // Auto-sync resume to localStorage for Tailor & Prep tabs
+  React.useEffect(() => {
+    try {
+      localStorage.setItem('resumight_resume_data', JSON.stringify(formData));
+    } catch (e) {
+      // ignore
+    }
+  }, [formData]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -73,6 +85,13 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
   const [isProcessingAi, setIsProcessingAi] = useState(false);
   const [aiSummaryMessage, setAiSummaryMessage] = useState<string | null>(null);
   const [speechError, setSpeechError] = useState<string | null>(null);
+
+  // PDF / Document Upload State
+  const [isUploadingPdf, setIsUploadingPdf] = useState(false);
+  const [pdfFileName, setPdfFileName] = useState<string | null>(null);
+  const [pdfUploadError, setPdfUploadError] = useState<string | null>(null);
+  const [isDraggingFile, setIsDraggingFile] = useState(false);
+  const pdfInputRef = React.useRef<HTMLInputElement | null>(null);
 
   // Modal State
   const [showGenerateModal, setShowGenerateModal] = useState(false);
@@ -210,6 +229,119 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
     }
   };
 
+  // Handle PDF / Document Upload
+  const handlePdfFile = async (file: File) => {
+    if (!file) return;
+
+    // Check supported file extensions or MIME types
+    const validExtensions = ['.pdf', '.txt', '.md', '.docx', '.doc'];
+    const lowerName = file.name.toLowerCase();
+    const isValid = validExtensions.some((ext) => lowerName.endsWith(ext)) || file.type === 'application/pdf' || file.type.startsWith('text/');
+
+    if (!isValid) {
+      setPdfUploadError('Please upload a PDF (.pdf), Word document (.docx), or text (.txt/.md) file.');
+      return;
+    }
+
+    setIsUploadingPdf(true);
+    setPdfFileName(file.name);
+    setPdfUploadError(null);
+    setAiSummaryMessage(null);
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const result = e.target?.result as string;
+        if (!result) {
+          setPdfUploadError('Could not read file. Please try again.');
+          setIsUploadingPdf(false);
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/parse-pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              fileBase64: result,
+              mimeType: file.type || (lowerName.endsWith('.pdf') ? 'application/pdf' : 'text/plain'),
+              fileName: file.name,
+            }),
+          });
+
+          const data = await res.json();
+
+          if (data.success && data.updatedFields) {
+            // Merge or overwrite updated fields into formData
+            setFormData((prev) => {
+              const next = { ...prev };
+              Object.keys(data.updatedFields).forEach((key) => {
+                const val = data.updatedFields[key];
+                if (val && typeof val === 'string' && val.trim().length > 0) {
+                  (next as any)[key] = val;
+                }
+              });
+              return next;
+            });
+
+            // Mark all updated fields as customized by the user
+            setEditedFields((prev) => {
+              const next = { ...prev };
+              Object.keys(data.updatedFields).forEach((key) => {
+                const val = data.updatedFields[key];
+                if (val && typeof val === 'string' && val.trim().length > 0) {
+                  next[key] = true;
+                }
+              });
+              return next;
+            });
+
+            setAiSummaryMessage(data.summaryMessage || `Successfully extracted resume from ${file.name}!`);
+          } else {
+            setPdfUploadError(data.error || 'Failed to extract resume fields from document.');
+          }
+        } catch (apiErr: any) {
+          console.error('API parse-pdf error:', apiErr);
+          setPdfUploadError('Failed to connect to AI server. Please check your connection.');
+        } finally {
+          setIsUploadingPdf(false);
+        }
+      };
+
+      reader.onerror = () => {
+        setPdfUploadError('Failed to read the file from disk.');
+        setIsUploadingPdf(false);
+      };
+
+      reader.readAsDataURL(file);
+    } catch (err: any) {
+      console.error('PDF file handle error:', err);
+      setPdfUploadError('Error processing file upload.');
+      setIsUploadingPdf(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFile(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFile(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingFile(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      handlePdfFile(e.dataTransfer.files[0]);
+    }
+  };
+
   return (
     <div className="py-10 px-4 sm:px-8 max-w-7xl mx-auto space-y-10">
       
@@ -232,14 +364,29 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={onBackToHome}
-            className="px-4 py-2.5 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-2 cursor-pointer"
+            className="px-3.5 py-2 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Home
           </button>
+          <button
+            onClick={onGoToTailor}
+            className="px-3.5 py-2 rounded-xl bg-emerald-100/80 hover:bg-emerald-200/90 text-xs font-bold text-emerald-950 border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
+          >
+            Tailor (ATS)
+          </button>
+          {handleCoach && (
+            <button
+              onClick={handleCoach}
+              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+              Coach
+            </button>
+          )}
         </div>
       </motion.div>
 
@@ -260,7 +407,7 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               </div>
               <div>
                 <h2 className="font-bold text-emerald-950 text-xl">1. Add your details</h2>
-                <p className="text-emerald-800/70 text-xs font-medium">Fill in each section or use voice to auto-populate.</p>
+                <p className="text-emerald-800/70 text-xs font-medium">Upload your PDF resume, fill in sections, or use voice.</p>
               </div>
             </div>
 
@@ -277,6 +424,87 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               Load sample data
             </button>
           </div>
+
+          {/* PDF & Document Upload Dropzone */}
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`rounded-2xl border-2 border-dashed p-4 transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-4 ${
+              isDraggingFile
+                ? 'border-emerald-500 bg-emerald-100/70 scale-[1.01]'
+                : 'border-emerald-200/90 bg-emerald-50/40 hover:bg-emerald-50/70'
+            }`}
+          >
+            <input
+              ref={pdfInputRef}
+              type="file"
+              accept=".pdf,.docx,.doc,.txt,.md"
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  handlePdfFile(e.target.files[0]);
+                }
+              }}
+              className="hidden"
+            />
+
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 shadow-sm border border-emerald-200">
+                {isUploadingPdf ? (
+                  <Loader2 className="w-5 h-5 animate-spin text-emerald-600" />
+                ) : (
+                  <FileUp className="w-5 h-5" />
+                )}
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-bold text-emerald-950 text-sm">
+                    {isUploadingPdf ? 'Parsing Resume with Gemini AI...' : 'Upload Existing Resume'}
+                  </h4>
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">
+                    PDF • DOCX • TXT
+                  </span>
+                </div>
+                <p className="text-emerald-800/80 text-xs mt-0.5">
+                  {isUploadingPdf
+                    ? `Reading structure, experiences, and skills from ${pdfFileName || 'document'}...`
+                    : 'Drag & drop your PDF resume here or click to auto-fill all form fields.'}
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              disabled={isUploadingPdf}
+              onClick={() => pdfInputRef.current?.click()}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0 disabled:opacity-50"
+            >
+              {isUploadingPdf ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  Extracting...
+                </>
+              ) : (
+                <>
+                  <Upload className="w-3.5 h-3.5" />
+                  Browse PDF
+                </>
+              )}
+            </button>
+          </div>
+
+          {pdfUploadError && (
+            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-center justify-between gap-2">
+              <span>{pdfUploadError}</span>
+              <button
+                type="button"
+                onClick={() => setPdfUploadError(null)}
+                className="text-rose-600 hover:text-rose-900 font-bold"
+              >
+                ✕
+              </button>
+            </div>
+          )}
 
           {/* Form Tabs */}
           <div className="flex flex-wrap gap-2">
@@ -729,15 +957,28 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                   {copiedText ? 'Copied' : 'Copy Text'}
                 </button>
 
+                {handleCoach && (
+                  <button
+                    onClick={() => {
+                      setShowGenerateModal(false);
+                      handleCoach();
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-teal-100 hover:bg-teal-200 text-teal-950 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-teal-200"
+                  >
+                    <Sparkles className="w-4 h-4 text-teal-700" />
+                    Practice with Coach
+                  </button>
+                )}
+
                 <button
                   onClick={() => {
-                    alert("Resume PDF generated and saved!");
+                    window.print();
                     setShowGenerateModal(false);
                   }}
                   className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
-                  Download PDF
+                  Print / Save PDF
                 </button>
               </div>
             </div>

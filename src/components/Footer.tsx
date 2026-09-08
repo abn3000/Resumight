@@ -41,14 +41,17 @@ export const Footer: React.FC<FooterProps> = ({ setActiveTab }) => {
             <button onClick={() => setActiveTab('tailor')} className="hover:text-emerald-700 transition-colors cursor-pointer">
               Tailor
             </button>
+            <button onClick={() => setActiveTab('coach')} className="hover:text-emerald-700 transition-colors cursor-pointer">
+              Coach
+            </button>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-medium text-emerald-900/70">
-          <p>© {new Date().getFullYear()} Resumight. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Built for students with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> & Glassmorphism Design
+          <p>© {new Date().getFullYear()} Resumight • Built for hackathons, career fairs & first co-ops</p>
+          <p className="flex items-center gap-1.5">
+            Made with <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" /> by students, for students • Free forever
           </p>
         </div>
 

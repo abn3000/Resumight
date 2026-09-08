@@ -16,6 +16,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onCtaCl
     { id: 'about', label: 'About' },
     { id: 'resumaker', label: 'Resumaker' },
     { id: 'tailor', label: 'Tailor' },
+    { id: 'coach', label: 'Coach' },
   ];
 
   const handleTabClick = (tab: NavTab) => {
@@ -28,25 +29,30 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onCtaCl
 
   return (
     <header className="sticky top-0 z-50 w-full px-4 sm:px-8 py-3 transition-all duration-300">
-      <div className="max-w-7xl mx-auto rounded-2xl glass-panel px-6 py-3.5 flex items-center justify-between border border-white/80 shadow-sm backdrop-blur-xl bg-white/70">
+      <div className="max-w-7xl mx-auto rounded-2xl glass-panel px-6 py-3.5 flex items-center justify-between border border-emerald-200/60 shadow-sm backdrop-blur-xl bg-white/80">
         
         {/* Brand Logo */}
         <button 
           onClick={() => handleTabClick('home')} 
           className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-emerald-600/90 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-600/20 group-hover:scale-105 transition-transform">
+          <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm shadow-emerald-600/20 group-hover:scale-105 transition-transform">
             <Sparkles className="w-5 h-5 text-emerald-100" />
           </div>
-          <span className="text-xl sm:text-2xl font-black tracking-wider text-emerald-950 uppercase font-sans">
-            RESUMIGHT
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="text-xl sm:text-2xl font-black tracking-wider text-emerald-950 uppercase font-sans">
+              RESUMIGHT
+            </span>
+            <span className="hidden sm:inline-flex items-center text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300/70 px-2 py-0.5 rounded-md tracking-wider uppercase">
+              student built
+            </span>
+          </div>
         </button>
 
         {/* Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 bg-emerald-100/50 p-1.5 rounded-full border border-emerald-200/40">
+        <nav className="hidden md:flex items-center gap-1 bg-emerald-100/60 p-1.5 rounded-full border border-emerald-200/60">
           {navItems.map((item) => {
-            const isActive = activeTab === item.id;
+            const isActive = activeTab === item.id || (item.id === 'coach' && activeTab === 'prep');
             return (
               <button
                 key={item.id}
@@ -98,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onCtaCl
               key={item.id}
               onClick={() => handleTabClick(item.id)}
               className={`text-left px-4 py-3 rounded-xl font-medium text-base transition-colors ${
-                activeTab === item.id
+                activeTab === item.id || (item.id === 'coach' && activeTab === 'prep')
                   ? 'bg-emerald-100/70 text-emerald-950 font-bold border border-emerald-200'
                   : 'text-emerald-800 hover:bg-emerald-50'
               }`}
