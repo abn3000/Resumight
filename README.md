@@ -14,7 +14,7 @@ Tailor is what makes your resume stand out from the crowd, letting you make the 
 # Coach
 Coach is what helps translate your skills on paper into something you can actually talk about. Inputting your resume and the role you're targeting allows the AI to create notes and even short scripts that help you present yourself in the best way possible. This is one of the most crucial steps for those applying to entry-level jobs, since many first-time job seekers freeze up when asked questions on the spot.
 
-## Extra
+# Extra
 Resumight's AI integration is done right: Actual smart usage as opposed to strictly fishing for keywords. This is because the AI that analyses has been specifically prompted to give the kinds of responses that would be useful to actual Resumight users. Resumight is completely free to use, though there may be issues with the AI integration due to my limited budget. Feel free to host it yourself on Google's AI Studio using your own API Key if necessary. 
 
 Note: Voice Analysis only works properly with Chromium browsers, but AI analysis of text still works anywhere.
