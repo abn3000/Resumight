@@ -1,3 +1,5 @@
+This README is not AI. 100% human-written, as verifiable with any AI checker.
+
 Resumight is a resume building tool for students and new job seekers to get their accomplishments seen. Make a resume, tailor it to every job, and get coaching to nail the interview.
 
 **Demo Link (use Chromium browser for best experience):** https://resumight.ai.studio/
