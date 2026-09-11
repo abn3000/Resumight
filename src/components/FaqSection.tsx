@@ -34,55 +34,55 @@ export const FaqSection: React.FC = () => {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-8 relative overflow-hidden">
-      <div className="max-w-4xl mx-auto space-y-10">
+    <section className="py-16 px-4 sm:px-8 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
-          className="text-left space-y-4"
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+          className="text-left space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-300/60 text-xs font-bold uppercase tracking-wider text-emerald-900 font-mono">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-300 border-2 border-slate-900 text-xs font-black uppercase tracking-wider text-slate-950 font-mono ">
             FREQUENTLY ASKED QUESTIONS
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-emerald-950 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight leading-tight">
             Got questions? We've got answers.
           </h2>
         </motion.div>
 
         {/* Accordion List */}
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((f, idx) => {
             const isOpen = openIdx === idx;
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="glass-panel rounded-2xl border border-white/90 overflow-hidden shadow-sm transition-all"
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: idx * 0.04 }}
+                className="rounded-xl border-2 border-slate-900 bg-white overflow-hidden transition-all"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-extrabold text-emerald-950 text-base sm:text-lg cursor-pointer hover:bg-white/40 transition-colors"
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-black text-slate-950 text-base cursor-pointer hover:bg-slate-50 transition-colors"
                 >
                   <span className="flex items-center gap-3">
                     <HelpCircle className="w-5 h-5 text-emerald-600 shrink-0" />
                     {f.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-emerald-700 shrink-0 transition-transform duration-300 ${
+                    className={`w-5 h-5 text-slate-900 shrink-0 transition-transform duration-200 ${
                       isOpen ? 'rotate-180' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-6 sm:px-6 pt-1 text-emerald-900/80 text-sm sm:text-base leading-relaxed border-t border-emerald-100/60 font-normal animate-in fade-in">
+                  <div className="px-4 pb-5 sm:px-5 pt-2 text-slate-800 text-sm leading-relaxed border-t-2 border-slate-200 font-medium">
                     {f.answer}
                   </div>
                 )}

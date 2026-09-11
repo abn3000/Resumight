@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import { motion } from 'motion/react';
 import { Target, Sparkles, Upload, CheckCircle2, AlertCircle, ArrowRight, RefreshCw, Copy, Check, ArrowLeft, Wand2, Loader2, FileUp, FileText } from 'lucide-react';
 
 interface TailorTabProps {
@@ -173,23 +172,20 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
   };
 
   return (
-    <div className="py-10 px-4 sm:px-8 max-w-7xl mx-auto space-y-10">
+    <div className="py-8 px-4 sm:px-8 max-w-7xl mx-auto space-y-8">
       
       {/* Top Banner */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl bg-gradient-to-r from-emerald-100/70 via-teal-50/50 to-white flex flex-col md:flex-row md:items-center justify-between gap-6"
+      <div 
+        className="rounded-xl border-4 border-slate-900 bg-emerald-100 p-6 sm:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
       >
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider font-mono shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-300 border-2 border-slate-900 text-slate-950 text-xs font-mono font-black uppercase tracking-wider ">
             JOB TAILOR WORKBENCH
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-emerald-950 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">
             Fit your resume to any job posting.
           </h1>
-          <p className="text-emerald-900/80 text-sm sm:text-base font-normal max-w-2xl">
+          <p className="text-slate-700 text-sm sm:text-base font-medium max-w-2xl">
             Upload your PDF resume or paste your bullets and target job description. Tailor identifies ATS keyword gaps, calculates your match score, and rewrites bullet points for maximum impact.
           </p>
         </div>
@@ -197,44 +193,41 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={onBackToHome}
-            className="px-3.5 py-2 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-lg bg-white border-2 border-slate-900 text-xs font-mono font-black text-slate-950 hover:bg-slate-100 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Home
           </button>
           <button
             onClick={onGoToResumaker}
-            className="px-3.5 py-2 rounded-xl bg-emerald-100/80 hover:bg-emerald-200/90 text-xs font-bold text-emerald-950 border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-lg bg-white border-2 border-slate-900 text-xs font-mono font-black text-slate-950 hover:bg-slate-100 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             Resumaker
           </button>
           {handleCoach && (
             <button
               onClick={handleCoach}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-2 rounded-lg bg-amber-300 hover:bg-amber-200 border-2 border-slate-900 text-xs font-mono font-black text-slate-950 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+              <Sparkles className="w-3.5 h-3.5 text-slate-950" />
               Coach
             </button>
           )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Main Workbench Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Inputs: Resume + Job Posting */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl space-y-6"
+        <div 
+          className="lg:col-span-7 rounded-xl border-4 border-slate-900 bg-white p-6 sm:p-8 space-y-6"
         >
           {/* Resume Input Block */}
           <div className="space-y-3">
             <div className="flex justify-between items-center flex-wrap gap-2">
-              <h2 className="font-bold text-emerald-950 text-base flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs flex items-center justify-center font-bold">1</span>
+              <h2 className="font-black text-slate-950 text-base flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-slate-900 text-white text-xs flex items-center justify-center font-mono font-black">1</span>
                 Your Resume Text
               </h2>
               
@@ -255,14 +248,14 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                       setResumeText(SAMPLE_RESUME);
                     }
                   }}
-                  className="text-xs text-emerald-800 hover:text-emerald-950 font-bold px-3 py-1 rounded-lg bg-emerald-100/70 hover:bg-emerald-200/80 border border-emerald-200 cursor-pointer transition-colors"
+                  className="text-xs font-mono font-bold text-slate-950 px-3 py-1 rounded-md bg-emerald-100 hover:bg-emerald-200 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 cursor-pointer transition-all"
                 >
                   Import from Resumaker
                 </button>
                 <button
                   type="button"
                   onClick={() => setResumeText(SAMPLE_RESUME)}
-                  className="text-xs text-emerald-800 hover:text-emerald-950 font-bold px-3 py-1 rounded-lg bg-emerald-100/70 border border-emerald-200 cursor-pointer"
+                  className="text-xs font-mono font-bold text-slate-950 px-3 py-1 rounded-md bg-white hover:bg-slate-100 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
                 >
                   Sample
                 </button>
@@ -271,16 +264,16 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                   type="button"
                   disabled={isUploadingFile}
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-xs text-emerald-800 hover:text-emerald-950 font-bold flex items-center gap-1.5 cursor-pointer bg-emerald-100/70 px-3 py-1 rounded-lg border border-emerald-200 disabled:opacity-50"
+                  className="text-xs font-mono font-bold text-slate-950 flex items-center gap-1.5 cursor-pointer bg-amber-300 hover:bg-amber-200 px-3 py-1 rounded-md border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 disabled:opacity-50"
                 >
                   {isUploadingFile ? (
                     <>
-                      <Loader2 className="w-3.5 h-3.5 animate-spin text-emerald-600" />
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-950" />
                       Parsing PDF...
                     </>
                   ) : (
                     <>
-                      <Upload className="w-3.5 h-3.5 text-emerald-600" />
+                      <Upload className="w-3.5 h-3.5 text-slate-950" />
                       Upload PDF / Text
                     </>
                   )}
@@ -302,22 +295,22 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
               }}
               onDragLeave={() => setIsDragging(false)}
               onDrop={handleDropResume}
-              className={`relative rounded-2xl transition-all ${
-                isDragging ? 'ring-2 ring-emerald-500 bg-emerald-50/80' : ''
+              className={`relative rounded-lg transition-all ${
+                isDragging ? 'ring-4 ring-emerald-500 bg-emerald-50' : ''
               }`}
             >
               <textarea
                 rows={6}
                 value={resumeText}
                 onChange={(e) => setResumeText(e.target.value)}
-                className="w-full p-4 rounded-2xl glass-input text-emerald-950 text-xs sm:text-sm font-mono leading-relaxed resize-none"
+                className="w-full p-4 rounded-lg border-2 border-slate-900 bg-slate-50 text-slate-950 text-xs sm:text-sm font-mono leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400"
                 placeholder="Paste your resume text here, or drag & drop a PDF resume directly into this box..."
               />
               {isUploadingFile && (
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-xs rounded-2xl flex flex-col items-center justify-center gap-2 z-10">
-                  <Loader2 className="w-6 h-6 text-emerald-600 animate-spin" />
-                  <span className="text-xs font-bold text-emerald-950">
-                    Extracting full resume from {uploadFileName || 'PDF'} with Gemini AI...
+                <div className="absolute inset-0 bg-white/95 rounded-lg border-2 border-slate-900 flex flex-col items-center justify-center gap-2 z-10">
+                  <Loader2 className="w-6 h-6 text-slate-950 animate-spin" />
+                  <span className="text-xs font-mono font-bold text-slate-950">
+                    Extracting resume from {uploadFileName || 'PDF'}...
                   </span>
                 </div>
               )}
@@ -327,11 +320,11 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
           {/* Job Description Input Block */}
           <div className="space-y-3 pt-2">
             <div className="flex justify-between items-center flex-wrap gap-2">
-              <h2 className="font-bold text-emerald-950 text-base flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-emerald-600 text-white text-xs flex items-center justify-center font-bold">2</span>
+              <h2 className="font-black text-slate-950 text-base flex items-center gap-2">
+                <span className="w-6 h-6 rounded-md bg-slate-900 text-white text-xs flex items-center justify-center font-mono font-black">2</span>
                 Target Job Description
               </h2>
-              <span className="text-xs text-emerald-800/80 font-medium">Or load sample role:</span>
+              <span className="text-xs font-mono text-slate-600 font-bold">Or load sample role:</span>
             </div>
 
             {/* Sample role chips */}
@@ -340,7 +333,7 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 <button
                   key={idx}
                   onClick={() => setJobDescription(sj.desc)}
-                  className="px-2.5 py-1 rounded-lg bg-emerald-100/80 hover:bg-emerald-200 text-[11px] font-bold text-emerald-900 transition-colors cursor-pointer"
+                  className="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[11px] font-mono font-bold text-slate-900 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-colors cursor-pointer"
                 >
                   {sj.title}
                 </button>
@@ -351,7 +344,7 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
               rows={5}
               value={jobDescription}
               onChange={(e) => setJobDescription(e.target.value)}
-              className="w-full p-4 rounded-2xl glass-input text-emerald-950 text-xs sm:text-sm font-mono leading-relaxed resize-none"
+              className="w-full p-4 rounded-lg border-2 border-slate-900 bg-slate-50 text-slate-950 text-xs sm:text-sm font-mono leading-relaxed resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400"
               placeholder="Paste the target job description here..."
             />
           </div>
@@ -360,64 +353,61 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
           <button
             onClick={handleRunTailor}
             disabled={isAnalyzing}
-            className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all duration-300 shadow-xl shadow-emerald-600/25 hover:shadow-2xl flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50"
+            className="w-full py-4 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black font-mono text-base border-4 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-3 cursor-pointer disabled:opacity-50"
           >
             {isAnalyzing ? (
               <>
-                <RefreshCw className="w-5 h-5 animate-spin" />
+                <RefreshCw className="w-5 h-5 animate-spin text-slate-950" />
                 Analyzing Match & Optimizing Bullets...
               </>
             ) : (
               <>
-                <Sparkles className="w-5 h-5 text-emerald-200" />
+                <Sparkles className="w-5 h-5 text-slate-950" />
                 Tailor My Resume Now
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5 text-slate-950" />
               </>
             )}
           </button>
-        </motion.div>
+        </div>
 
         {/* Right Column: Tailored Analysis & Rewrites */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="lg:col-span-5 glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl space-y-6 min-h-[460px] flex flex-col justify-between"
+        <div 
+          className="lg:col-span-5 rounded-xl border-4 border-slate-900 bg-white p-6 sm:p-8 space-y-6 min-h-[460px] flex flex-col justify-between"
         >
           <div>
-            <div className="flex items-center justify-between pb-4 border-b border-emerald-100">
+            <div className="flex items-center justify-between pb-4 border-b-2 border-slate-200">
               <div className="flex items-center gap-2">
-                <Target className="w-5 h-5 text-emerald-600" />
-                <h3 className="font-bold text-emerald-950 text-lg">ATS Match Breakdown</h3>
+                <Target className="w-5 h-5 text-slate-950" />
+                <h3 className="font-black text-slate-950 text-lg">ATS Match Breakdown</h3>
               </div>
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 font-mono">
+              <span className="text-xs font-black px-3 py-1 rounded-md bg-amber-300 border-2 border-slate-900 text-slate-950 font-mono ">
                 {analyzed && tailoredResult ? `${tailoredResult.matchScore}% Match` : 'Ready'}
               </span>
             </div>
 
             {error && (
-              <div className="mt-4 p-3 rounded-2xl bg-rose-100 text-rose-950 text-xs font-semibold border border-rose-200">
+              <div className="mt-4 p-3 rounded-lg bg-rose-100 text-rose-950 text-xs font-mono font-bold border-2 border-rose-400">
                 {error}
               </div>
             )}
 
             {!analyzed && !isAnalyzing && (
               <div className="py-12 text-center space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 rounded-xl bg-amber-200 border-2 border-slate-900 text-slate-950 flex items-center justify-center mx-auto">
                   <Target className="w-6 h-6" />
                 </div>
-                <h4 className="font-bold text-emerald-950 text-base">Comparison Workbench</h4>
-                <p className="text-xs text-emerald-800 max-w-xs mx-auto">
-                  Enter your resume and job posting on the left, then click "Tailor My Resume Now" to view your ATS compatibility score, missing buzzwords, and full rewritten resume!
+                <h4 className="font-black text-slate-950 text-base">Comparison Workbench</h4>
+                <p className="text-xs text-slate-700 max-w-xs mx-auto leading-relaxed">
+                  Enter your resume and job posting on the left, then click "Tailor My Resume Now" to view your ATS compatibility score, missing keywords, and full rewritten resume!
                 </p>
               </div>
             )}
 
             {isAnalyzing && (
               <div className="py-16 text-center space-y-4">
-                <RefreshCw className="w-8 h-8 text-emerald-600 animate-spin mx-auto" />
-                <p className="text-sm font-bold text-emerald-950">
-                  Gemini AI scanning ATS keywords & crafting full tailored resume...
+                <RefreshCw className="w-8 h-8 text-slate-950 animate-spin mx-auto" />
+                <p className="text-sm font-mono font-bold text-slate-950">
+                  Scanning ATS keywords & crafting full tailored resume...
                 </p>
               </div>
             )}
@@ -427,13 +417,13 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 
                 {/* Score Bar */}
                 <div>
-                  <div className="flex justify-between items-center text-xs font-bold text-emerald-950 mb-1.5">
+                  <div className="flex justify-between items-center text-xs font-mono font-bold text-slate-950 mb-1.5">
                     <span>ATS Keyword Match Score</span>
-                    <span className="text-emerald-700 font-extrabold text-sm">{tailoredResult.matchScore}%</span>
+                    <span className="font-black text-sm">{tailoredResult.matchScore}%</span>
                   </div>
-                  <div className="w-full bg-emerald-100 h-3 rounded-full overflow-hidden p-0.5">
+                  <div className="w-full bg-slate-100 h-4 rounded-full border-2 border-slate-900 overflow-hidden p-0.5">
                     <div 
-                      className="bg-emerald-600 h-full rounded-full shadow-sm transition-all duration-700"
+                      className="bg-emerald-400 h-full rounded-full border-r-2 border-slate-900 transition-all duration-700"
                       style={{ width: `${Math.min(100, Math.max(10, tailoredResult.matchScore))}%` }}
                     />
                   </div>
@@ -443,13 +433,13 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 <div className="space-y-3">
                   {tailoredResult.matchedKeywords.length > 0 && (
                     <div>
-                      <h4 className="text-xs font-bold text-emerald-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <h4 className="text-xs font-mono font-black text-slate-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                         Matched Keywords
                       </h4>
                       <div className="flex flex-wrap gap-1.5">
                         {tailoredResult.matchedKeywords.map((kw, i) => (
-                          <span key={i} className="px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-950 text-xs font-bold">
+                          <span key={i} className="px-2.5 py-1 rounded-md bg-emerald-100 border-2 border-slate-900 text-slate-950 text-xs font-mono font-bold ">
                             ✓ {kw}
                           </span>
                         ))}
@@ -459,13 +449,13 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
 
                   {tailoredResult.missingKeywords.length > 0 && (
                     <div>
-                      <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                      <h4 className="text-xs font-mono font-black text-slate-950 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                         <AlertCircle className="w-4 h-4 text-amber-600" />
                         Added Buzzwords & Target Keywords
                       </h4>
                       <div className="flex flex-wrap gap-1.5">
                         {tailoredResult.missingKeywords.map((kw, i) => (
-                          <span key={i} className="px-2.5 py-1 rounded-md bg-amber-100/90 text-amber-950 text-xs font-bold border border-amber-200">
+                          <span key={i} className="px-2.5 py-1 rounded-md bg-amber-200 border-2 border-slate-900 text-slate-950 text-xs font-mono font-bold ">
                             + {kw}
                           </span>
                         ))}
@@ -475,10 +465,10 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 </div>
 
                 {/* FULL TAILORED RESUME BOX */}
-                <div className="p-4 rounded-2xl bg-white border border-emerald-200 shadow-sm space-y-3">
+                <div className="p-4 rounded-xl bg-slate-50 border-2 border-slate-900 space-y-3">
                   <div className="flex justify-between items-center flex-wrap gap-2">
-                    <span className="text-xs font-extrabold text-emerald-800 uppercase tracking-wider flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-emerald-600" />
+                    <span className="text-xs font-mono font-black text-slate-950 uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-slate-950" />
                       Full Tailored Resume
                     </span>
                     <div className="flex items-center gap-2">
@@ -488,10 +478,10 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                           setCopiedResume(true);
                           setTimeout(() => setCopiedResume(false), 2000);
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors"
+                        className="px-2.5 py-1 rounded-md bg-white hover:bg-slate-100 text-slate-950 text-xs font-mono font-bold border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 flex items-center gap-1 cursor-pointer transition-all"
                       >
-                        {copiedResume ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                        {copiedResume ? 'Copied Full Resume' : 'Copy Full Text'}
+                        {copiedResume ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-slate-950" />}
+                        {copiedResume ? 'Copied' : 'Copy Text'}
                       </button>
 
                       <button
@@ -504,14 +494,14 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                           element.click();
                           document.body.removeChild(element);
                         }}
-                        className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1 cursor-pointer transition-colors shadow-sm"
+                        className="px-2.5 py-1 rounded-md bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-mono font-bold border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 flex items-center gap-1 cursor-pointer transition-all"
                       >
                         Download .txt
                       </button>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 max-h-64 overflow-y-auto text-xs font-mono text-slate-900 whitespace-pre-wrap leading-relaxed select-text">
+                  <div className="p-3 rounded-lg bg-white border-2 border-slate-900 max-h-64 overflow-y-auto text-xs font-mono text-slate-900 whitespace-pre-wrap leading-relaxed select-text">
                     {tailoredResult.tailoredResumeText}
                   </div>
                 </div>
@@ -519,12 +509,12 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                 {/* Key Bullet Point Transformations */}
                 {tailoredResult.bulletRewrites.length > 0 && (
                   <div className="space-y-3">
-                    <h4 className="text-xs font-bold text-emerald-950 uppercase tracking-wider">
+                    <h4 className="text-xs font-mono font-black text-slate-950 uppercase tracking-wider">
                       Targeted Bullet Point Transformations
                     </h4>
                     {tailoredResult.bulletRewrites.map((rw, i) => (
-                      <div key={i} className="p-3.5 rounded-2xl bg-white border border-emerald-200 shadow-sm space-y-2">
-                        <div className="flex justify-between items-center text-[10px] font-bold text-emerald-800">
+                      <div key={i} className="p-3.5 rounded-xl bg-white border-2 border-slate-900 space-y-2">
+                        <div className="flex justify-between items-center text-[10px] font-mono font-bold text-slate-700">
                           <span>BEFORE</span>
                           <button
                             onClick={() => {
@@ -532,19 +522,19 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
                               setCopiedBulletIndex(i);
                               setTimeout(() => setCopiedBulletIndex(null), 2000);
                             }}
-                            className="text-emerald-700 hover:text-emerald-950 font-bold flex items-center gap-1 cursor-pointer"
+                            className="text-slate-950 font-bold flex items-center gap-1 hover:underline cursor-pointer"
                           >
                             {copiedBulletIndex === i ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                            {copiedBulletIndex === i ? 'Copied Bullet' : 'Copy Tailored'}
+                            {copiedBulletIndex === i ? 'Copied' : 'Copy'}
                           </button>
                         </div>
                         <p className="text-xs text-slate-500 line-through">{rw.original}</p>
 
-                        <div className="text-[10px] font-bold text-emerald-700 pt-1">AFTER (OPTIMIZED)</div>
-                        <p className="text-xs font-semibold text-emerald-950 leading-relaxed bg-emerald-50/80 p-2 rounded-lg border border-emerald-100">
+                        <div className="text-[10px] font-mono font-black text-slate-950 pt-1">AFTER (OPTIMIZED)</div>
+                        <p className="text-xs font-mono font-bold text-slate-950 leading-relaxed bg-emerald-50 p-2 rounded-md border-2 border-emerald-300">
                           "{rw.tailored}"
                         </p>
-                        <p className="text-[11px] text-emerald-800/90 italic pt-0.5">💡 {rw.reasoning}</p>
+                        <p className="text-[11px] text-slate-700 italic pt-0.5">💡 {rw.reasoning}</p>
                       </div>
                     ))}
                   </div>
@@ -552,12 +542,12 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
 
                 {/* Strategic Advice */}
                 {tailoredResult.summaryFeedback && (
-                  <div className="p-3.5 rounded-2xl bg-emerald-50/90 border border-emerald-200 text-xs text-emerald-950 space-y-1">
-                    <div className="font-bold text-emerald-900 flex items-center gap-1.5">
-                      <Sparkles className="w-4 h-4 text-emerald-600" />
-                      Strategic AI Advice
+                  <div className="p-3.5 rounded-xl bg-amber-50 border-2 border-slate-900 text-xs text-slate-950 space-y-1">
+                    <div className="font-mono font-black text-slate-950 flex items-center gap-1.5">
+                      <Sparkles className="w-4 h-4 text-slate-950" />
+                      Strategic Advice
                     </div>
-                    <p className="text-emerald-900/90 leading-relaxed font-normal">{tailoredResult.summaryFeedback}</p>
+                    <p className="text-slate-800 leading-relaxed font-medium">{tailoredResult.summaryFeedback}</p>
                   </div>
                 )}
 
@@ -565,26 +555,26 @@ export const TailorTab: React.FC<TailorTabProps> = ({ onBackToHome, onGoToResuma
             )}
           </div>
 
-          <div className="pt-4 border-t border-emerald-100 flex flex-wrap items-center justify-between gap-3">
+          <div className="pt-4 border-t-2 border-slate-200 flex flex-wrap items-center justify-between gap-3">
             <button
               onClick={onGoToResumaker}
-              className="text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors flex items-center gap-1 cursor-pointer"
+              className="text-xs font-mono font-black text-slate-950 hover:underline transition-colors flex items-center gap-1 cursor-pointer"
             >
-              <Wand2 className="w-3.5 h-3.5 text-emerald-600" />
+              <Wand2 className="w-3.5 h-3.5 text-slate-950" />
               Need a fresh resume draft? Open Resumaker →
             </button>
 
             {handleCoach && (
               <button
                 onClick={handleCoach}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-amber-300 hover:bg-amber-200 text-slate-950 text-xs font-mono font-black border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
                 Practice with Coach →
               </button>
             )}
           </div>
-        </motion.div>
+        </div>
 
       </div>
 

@@ -1,6 +1,6 @@
 {
   "name": "Resumight",
-  "description": "Create polished resumes in minutes and tailor them to specific job postings with a light glassmorphism design.",
+  "description": "A student-built resume maker, job description tailor, and interview coach. Free forever, no subscriptions.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

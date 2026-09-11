@@ -1,52 +1,90 @@
 @import "tailwindcss";
 
 @layer utilities {
+  /* Classic Blocky HTML Solid Box Aesthetic (Zero Shadows, Sharp/Flat) */
   .glass-panel {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .glass-panel-hover {
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background-color 0.1s ease;
   }
   .glass-panel-hover:hover {
-    background: rgba(255, 255, 255, 0.82);
-    border-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 20px 40px -12px rgba(16, 185, 129, 0.15), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
-    transform: translateY(-2px);
+    background-color: #f8fafc;
   }
 
   .glass-pill {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    box-shadow: none;
   }
 
   .glass-input {
-    background: rgba(236, 253, 245, 0.5);
-    border: 1px solid rgba(167, 243, 208, 0.6);
-    backdrop-filter: blur(8px);
+    background: #ffffff;
+    border: 2px solid #0f172a;
+    color: #0f172a;
+    box-shadow: none;
   }
   .glass-input:focus {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(16, 185, 129, 0.8);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    background: #ffffff;
+    border-color: #0f172a;
+    outline: 2px solid #0f172a;
   }
+
+  /* Blocky Flat Button Styles */
+  .student-btn-primary {
+    background: #34d399;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    box-shadow: none;
+    font-weight: 700;
+  }
+  .student-btn-primary:hover {
+    background: #10b981;
+  }
+  .student-btn-primary:active {
+    background: #059669;
+    color: #ffffff;
+  }
+
+  .student-btn-secondary {
+    background: #ffffff;
+    color: #0f172a;
+    border: 2px solid #0f172a;
+    box-shadow: none;
+    font-weight: 700;
+  }
+  .student-btn-secondary:hover {
+    background: #f1f5f9;
+  }
+  .student-btn-secondary:active {
+    background: #e2e8f0;
+  }
+
+  /* Flat note accent */
+  .student-sticky {
+    background: #fef08a;
+    border: 2px solid #0f172a;
+    box-shadow: none;
+  }
+}
+
+html, body, button, input, textarea, select, * {
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
 }
 
 html {
   scroll-behavior: smooth;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  color: #064e3b;
+  color: #0f172a;
 }
 
 body {
-  background-color: #f2fbf7;
+  background-color: #f4f4f5;
   overflow-x: hidden;
 }
+
 

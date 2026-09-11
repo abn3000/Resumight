@@ -44,25 +44,25 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
   const curr = templateDetails[activeTemplate];
 
   return (
-    <section className="py-20 px-4 sm:px-8 relative overflow-hidden bg-emerald-100/30">
-      <div className="max-w-7xl mx-auto space-y-12">
+    <section className="py-16 px-4 sm:px-8 relative overflow-hidden bg-slate-100/60 border-y-2 border-slate-900">
+      <div className="max-w-7xl mx-auto space-y-10">
         
         {/* Header */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
           className="flex flex-col md:flex-row md:items-end justify-between gap-6"
         >
-          <div className="space-y-4 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-300/60 text-xs font-bold uppercase tracking-wider text-emerald-900 font-mono">
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-300 border-2 border-slate-900 text-xs font-black uppercase tracking-wider text-slate-950 font-mono ">
               WHAT'S INSIDE
             </div>
-            <h2 className="text-3xl sm:text-5xl font-black text-emerald-950 tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight leading-tight">
               Polished layouts designed to stand out.
             </h2>
-            <p className="text-base sm:text-lg text-emerald-900/80 leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-medium">
               Explore four distinct resume aesthetics built specifically to highlight student experience, internships, and capstone achievements.
             </p>
           </div>
@@ -70,7 +70,7 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowComparison(!showComparison)}
-              className="px-5 py-2.5 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all cursor-pointer flex items-center gap-2"
+              className="px-4 py-2 rounded-lg bg-white text-xs font-black font-mono text-slate-950 border-2 border-slate-900 hover:bg-slate-100 active:translate-x-0.5 active:translate-y-0.5 transition-all cursor-pointer flex items-center gap-2"
             >
               <Eye className="w-4 h-4 text-emerald-600" />
               {showComparison ? 'View Template Cards' : 'Before vs After Resumight'}
@@ -83,7 +83,7 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Template Selectors */}
-            <div className="lg:col-span-5 space-y-4">
+            <div className="lg:col-span-5 space-y-3">
               {[
                 { id: 'swiss', label: 'Swiss', desc: 'Modern & structured' },
                 { id: 'serif', label: 'Serif', desc: 'Classic academic' },
@@ -92,35 +92,34 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
               ].map((t) => {
                 const isSel = activeTemplate === t.id;
                 return (
-                  <motion.button
+                  <button
                     key={t.id}
-                    whileHover={{ x: 4 }}
                     onClick={() => setActiveTemplate(t.id as any)}
-                    className={`w-full p-5 rounded-2xl text-left transition-all cursor-pointer flex items-center justify-between border ${
+                    className={`w-full p-4 rounded-xl text-left transition-all cursor-pointer flex items-center justify-between border-2 border-slate-900 ${
                       isSel
-                        ? 'glass-panel bg-white/95 border-emerald-500 shadow-xl ring-2 ring-emerald-500/20'
-                        : 'glass-panel bg-white/60 border-emerald-100 hover:bg-white/80'
+                        ? 'bg-emerald-300 '
+                        : 'bg-white hover:bg-slate-50'
                     }`}
                   >
                     <div>
-                      <h3 className="font-extrabold text-emerald-950 text-base">{t.label} Layout</h3>
-                      <p className="text-xs text-emerald-800/80">{t.desc}</p>
+                      <h3 className="font-black text-slate-950 text-base">{t.label} Layout</h3>
+                      <p className="text-xs text-slate-700 font-mono font-bold">{t.desc}</p>
                     </div>
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs ${
-                      isSel ? 'bg-emerald-600 text-white' : 'bg-emerald-100 text-emerald-800'
+                    <div className={`w-6 h-6 rounded border border-slate-900 flex items-center justify-center font-bold text-xs ${
+                      isSel ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-900'
                     }`}>
                       {isSel ? '✓' : '→'}
                     </div>
-                  </motion.button>
+                  </button>
                 );
               })}
 
-              <div className="p-6 rounded-3xl glass-panel border border-white/90 space-y-3">
-                <h4 className="font-bold text-emerald-950 text-sm flex items-center gap-2">
+              <div className="p-5 rounded-xl border-2 border-slate-900 bg-white space-y-3">
+                <h4 className="font-black text-slate-950 text-sm flex items-center gap-2 font-mono">
                   <Sparkles className="w-4 h-4 text-emerald-600" />
                   Included with every template:
                 </h4>
-                <ul className="text-xs text-emerald-900 space-y-2 font-medium">
+                <ul className="text-xs text-slate-800 space-y-2 font-medium">
                   <li className="flex items-center gap-2">
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                     Automatic margin & font size balancing
@@ -137,7 +136,7 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
 
                 <button
                   onClick={onBuildClick}
-                  className="w-full mt-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-2 py-2.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black font-mono text-xs border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   Use {curr.title.split(' ')[0]} Layout Now
                   <ArrowRight className="w-4 h-4" />
@@ -146,12 +145,9 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
             </div>
 
             {/* Interactive Paper Preview Card */}
-            <motion.div 
+            <div 
               key={activeTemplate}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="lg:col-span-7 bg-white rounded-3xl p-8 border border-emerald-100 shadow-2xl relative min-h-[500px] flex flex-col justify-between"
+              className="lg:col-span-7 bg-white rounded-xl p-6 sm:p-7 border-2 border-slate-900 relative min-h-[500px] flex flex-col justify-between"
             >
               <div className={`space-y-6 ${curr.fontFamily}`}>
                 
@@ -211,23 +207,23 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
               </div>
 
               {/* Watermark Tag */}
-              <div className="pt-6 border-t border-emerald-100 flex justify-between items-center text-[10px] text-emerald-800 font-sans font-semibold">
+              <div className="pt-6 border-t border-slate-300 flex justify-between items-center text-[10px] text-slate-700 font-mono font-bold">
                 <span>Resumight Output • ATS Compliant</span>
                 <span>Page 1 of 1</span>
               </div>
-            </motion.div>
+            </div>
 
           </div>
         ) : (
           /* Before vs After Transformation */
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Before */}
-            <div className="glass-panel p-6 rounded-3xl border border-red-200/80 bg-red-50/30 space-y-4">
-              <div className="flex items-center gap-2 text-rose-700 font-bold text-sm">
-                <span className="w-6 h-6 rounded-full bg-rose-200 flex items-center justify-center text-xs">✕</span>
+            <div className="p-5 rounded-xl border-2 border-slate-900 bg-red-100 space-y-3">
+              <div className="flex items-center gap-2 text-rose-950 font-black font-mono text-sm">
+                <span className="w-5 h-5 rounded border border-slate-900 bg-rose-300 flex items-center justify-center text-xs">✕</span>
                 Messy Unformatted Resume Draft
               </div>
-              <div className="bg-white/80 p-4 rounded-2xl font-mono text-xs text-slate-700 space-y-2 border border-rose-100">
+              <div className="bg-white p-4 rounded-lg font-mono text-xs text-slate-800 space-y-2 border-2 border-slate-900 ">
                 <p className="font-bold">alex morgan - student</p>
                 <p>email: alex@gmail.com phone: 555-1234</p>
                 <p className="pt-2 font-bold">Experience:</p>
@@ -238,17 +234,17 @@ export const WhatsInsideSection: React.FC<WhatsInsideSectionProps> = ({ onBuildC
             </div>
 
             {/* After */}
-            <div className="glass-panel p-6 rounded-3xl border border-emerald-300 bg-emerald-50/50 space-y-4 shadow-xl">
-              <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm">
-                <span className="w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center text-xs">✓</span>
+            <div className="p-5 rounded-xl border-2 border-slate-900 bg-emerald-100 space-y-3 ">
+              <div className="flex items-center gap-2 text-slate-950 font-black font-mono text-sm">
+                <span className="w-5 h-5 rounded border border-slate-900 bg-emerald-400 flex items-center justify-center text-xs font-black">✓</span>
                 Polished Resumight Resume
               </div>
-              <div className="bg-white p-4 rounded-2xl text-xs text-emerald-950 space-y-2 border border-emerald-200 shadow-sm">
-                <p className="font-extrabold text-sm text-emerald-900 border-b border-emerald-100 pb-1">ALEX MORGAN</p>
-                <p className="text-[11px] text-emerald-800">alexmorgan@berkeley.edu • (555) 123-4567 • San Francisco, CA</p>
-                <p className="pt-1 font-bold text-emerald-900 uppercase text-[10px] tracking-wider">PROJECT EXPERIENCE</p>
+              <div className="bg-white p-4 rounded-lg text-xs text-slate-950 space-y-2 border-2 border-slate-900 ">
+                <p className="font-black text-sm text-slate-950 border-b-2 border-slate-900 pb-1">ALEX MORGAN</p>
+                <p className="text-[11px] text-slate-700 font-mono">alexmorgan@berkeley.edu • (555) 123-4567 • San Francisco, CA</p>
+                <p className="pt-1 font-black text-slate-950 uppercase text-[10px] tracking-wider font-mono">PROJECT EXPERIENCE</p>
                 <p className="font-bold text-[11px]">Lead Frontend Developer • Campus React Application</p>
-                <p className="text-[11px] font-normal leading-relaxed text-emerald-900">
+                <p className="text-[11px] font-medium leading-relaxed text-slate-800">
                   • Architected modular React & Tailwind CSS components, improving application rendering speed by 35%.<br />
                   • Directed usability testing with 15+ student participants to refine accessibility and navigation flows.
                 </p>

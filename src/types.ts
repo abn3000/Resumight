@@ -1,4 +1,4 @@
-export type NavTab = 'home' | 'about' | 'resumaker' | 'tailor' | 'coach' | 'prep';
+export type NavTab = 'home' | 'resumaker' | 'tailor' | 'coach' | 'prep';
 
 export interface LayoutTemplate {
   id: string;

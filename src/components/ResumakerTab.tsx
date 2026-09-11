@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
 import { Mic, MicOff, Check, FileText, Palette, Layout, Wand2, Sparkles, Download, X, Copy, Printer, ArrowLeft, Upload, FileUp, Loader2, FileType } from 'lucide-react';
 import { NavTab } from '../types';
 
@@ -343,23 +342,20 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
   };
 
   return (
-    <div className="py-10 px-4 sm:px-8 max-w-7xl mx-auto space-y-10">
+    <div className="py-10 px-4 sm:px-8 max-w-7xl mx-auto space-y-8">
       
       {/* Top Banner */}
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl bg-gradient-to-r from-emerald-100/70 via-teal-50/50 to-white flex flex-col md:flex-row md:items-center justify-between gap-6"
+      <div 
+        className="rounded-xl p-6 sm:p-8 border-2 border-slate-900 bg-white flex flex-col md:flex-row md:items-center justify-between gap-6"
       >
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-600 text-white text-xs font-bold uppercase tracking-wider font-mono shadow-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-amber-300 text-slate-950 text-xs font-black uppercase tracking-wider font-mono border-2 border-slate-900 ">
             RESUMAKER WORKSPACE
           </div>
-          <h1 className="text-3xl sm:text-4xl font-black text-emerald-950 tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-black text-slate-950 tracking-tight">
             Create your resume in minutes.
           </h1>
-          <p className="text-emerald-900/80 text-sm sm:text-base font-normal max-w-2xl">
+          <p className="text-slate-700 text-sm sm:text-base font-medium max-w-2xl">
             Type your details into the fields below or tap the microphone to describe your background naturally. Choose your layout and accent color, then hit Generate!
           </p>
         </div>
@@ -367,47 +363,44 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={onBackToHome}
-            className="px-3.5 py-2 rounded-xl glass-panel text-xs font-bold text-emerald-950 border border-emerald-200 hover:bg-white transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-lg bg-white text-xs font-black font-mono text-slate-950 border-2 border-slate-900 hover:bg-slate-100 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Home
           </button>
           <button
             onClick={onGoToTailor}
-            className="px-3.5 py-2 rounded-xl bg-emerald-100/80 hover:bg-emerald-200/90 text-xs font-bold text-emerald-950 border border-emerald-200 transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-3.5 py-2 rounded-lg bg-emerald-300 hover:bg-emerald-200 text-xs font-black font-mono text-slate-950 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             Tailor (ATS)
           </button>
           {handleCoach && (
             <button
               onClick={handleCoach}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-xs font-bold text-white shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+              className="px-3.5 py-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-xs font-black font-mono text-slate-950 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
+              <Sparkles className="w-3.5 h-3.5 text-slate-950" />
               Coach
             </button>
           )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Main Builder Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Column: Input Form & Voice Mic */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="lg:col-span-7 glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-xl space-y-6"
+        <div 
+          className="lg:col-span-7 rounded-xl p-6 sm:p-8 border-2 border-slate-900 bg-white space-y-6"
         >
-          <div className="flex items-center justify-between pb-2 border-b border-emerald-100 flex-wrap gap-2">
+          <div className="flex items-center justify-between pb-3 border-b-2 border-slate-200 flex-wrap gap-2">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold shadow-md">
+              <div className="w-10 h-10 rounded-lg bg-slate-950 text-amber-300 border-2 border-slate-900 flex items-center justify-center font-mono font-black ">
                 <FileText className="w-5 h-5" />
               </div>
               <div>
-                <h2 className="font-bold text-emerald-950 text-xl">1. Add your details</h2>
-                <p className="text-emerald-800/70 text-xs font-medium">Upload your PDF resume, fill in sections, or use voice.</p>
+                <h2 className="font-black text-slate-950 text-xl">1. Add your details</h2>
+                <p className="text-slate-600 text-xs font-medium">Upload your PDF resume, fill in sections, or use voice.</p>
               </div>
             </div>
 
@@ -419,7 +412,7 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                 Object.keys(SAMPLE_FORM_DATA).forEach((k) => (edited[k] = true));
                 setEditedFields(edited);
               }}
-              className="text-xs text-emerald-800 hover:text-emerald-950 font-bold px-3 py-1 rounded-lg bg-emerald-100/80 border border-emerald-200 cursor-pointer"
+              className="text-xs text-slate-950 hover:bg-amber-200 font-mono font-black px-3 py-1.5 rounded-lg bg-amber-300 border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 cursor-pointer"
             >
               Load sample data
             </button>
@@ -430,10 +423,10 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            className={`rounded-2xl border-2 border-dashed p-4 transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-4 ${
+            className={`rounded-xl border-2 border-dashed p-4 transition-all duration-150 flex flex-col sm:flex-row items-center justify-between gap-4 ${
               isDraggingFile
-                ? 'border-emerald-500 bg-emerald-100/70 scale-[1.01]'
-                : 'border-emerald-200/90 bg-emerald-50/40 hover:bg-emerald-50/70'
+                ? 'border-slate-900 bg-amber-100 scale-[1.01]'
+                : 'border-slate-900 bg-slate-50 hover:bg-slate-100'
             }`}
           >
             <input
@@ -449,23 +442,23 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
             />
 
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0 shadow-sm border border-emerald-200">
+              <div className="w-10 h-10 rounded-lg bg-white text-slate-950 border-2 border-slate-900 flex items-center justify-center shrink-0 ">
                 {isUploadingPdf ? (
-                  <Loader2 className="w-5 h-5 animate-spin text-emerald-600" />
+                  <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
                 ) : (
-                  <FileUp className="w-5 h-5" />
+                  <FileUp className="w-5 h-5 text-slate-950" />
                 )}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-bold text-emerald-950 text-sm">
+                  <h4 className="font-black text-slate-950 text-sm">
                     {isUploadingPdf ? 'Parsing Resume with Gemini AI...' : 'Upload Existing Resume'}
                   </h4>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">
+                  <span className="px-2 py-0.5 rounded-md bg-amber-200 text-slate-950 text-[10px] font-mono font-bold border border-slate-900">
                     PDF • DOCX • TXT
                   </span>
                 </div>
-                <p className="text-emerald-800/80 text-xs mt-0.5">
+                <p className="text-slate-600 text-xs mt-0.5">
                   {isUploadingPdf
                     ? `Reading structure, experiences, and skills from ${pdfFileName || 'document'}...`
                     : 'Drag & drop your PDF resume here or click to auto-fill all form fields.'}
@@ -477,16 +470,16 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               type="button"
               disabled={isUploadingPdf}
               onClick={() => pdfInputRef.current?.click()}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0 disabled:opacity-50"
+              className="px-4 py-2 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-black font-mono border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer shrink-0 disabled:opacity-50"
             >
               {isUploadingPdf ? (
                 <>
-                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-950" />
                   Extracting...
                 </>
               ) : (
                 <>
-                  <Upload className="w-3.5 h-3.5" />
+                  <Upload className="w-3.5 h-3.5 text-slate-950" />
                   Browse PDF
                 </>
               )}
@@ -494,12 +487,12 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
           </div>
 
           {pdfUploadError && (
-            <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-medium flex items-center justify-between gap-2">
+            <div className="p-3 rounded-lg bg-rose-100 border-2 border-slate-900 text-rose-950 text-xs font-bold flex items-center justify-between gap-2">
               <span>{pdfUploadError}</span>
               <button
                 type="button"
                 onClick={() => setPdfUploadError(null)}
-                className="text-rose-600 hover:text-rose-900 font-bold"
+                className="text-rose-950 hover:underline font-bold"
               >
                 ✕
               </button>
@@ -518,10 +511,10 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               <button
                 key={tab.id}
                 onClick={() => setActiveFormTab(tab.id as any)}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-black border-2 border-slate-900 transition-all cursor-pointer ${
                   activeFormTab === tab.id
-                    ? 'bg-emerald-600 text-white shadow-md'
-                    : 'bg-emerald-100/70 text-emerald-900 hover:bg-emerald-200/80'
+                    ? 'bg-amber-300 text-slate-950 '
+                    : 'bg-white text-slate-900 hover:bg-slate-100 '
                 }`}
               >
                 {tab.label}
@@ -533,67 +526,67 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
           {activeFormTab === 'basic' && (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">Full name</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">Full name</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleInputChange('name', e.target.value)}
                   placeholder="e.g. Alex Morgan"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">Target role / title</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">Target role / title</label>
                 <input
                   type="text"
                   value={formData.role}
                   onChange={(e) => handleInputChange('role', e.target.value)}
                   placeholder="e.g. Product Design & CS Student"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">Email</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">Email</label>
                 <input
                   type="text"
                   value={formData.email}
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   placeholder="e.g. alex.morgan@berkeley.edu"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">Phone</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">Phone</label>
                 <input
                   type="text"
                   value={formData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   placeholder="e.g. (555) 019-2834"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">Location</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">Location</label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => handleInputChange('location', e.target.value)}
                   placeholder="e.g. San Francisco, CA"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold text-emerald-900 mb-1">LinkedIn / Portfolio</label>
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">LinkedIn / Portfolio</label>
                 <input
                   type="text"
                   value={formData.linkedin}
                   onChange={(e) => handleInputChange('linkedin', e.target.value)}
                   placeholder="e.g. linkedin.com/in/alexmorgan"
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none"
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-xs font-bold text-emerald-900 mb-1">
+                <label className="block text-xs font-mono font-black text-slate-950 uppercase mb-1">
                   Professional summary
                 </label>
                 <textarea
@@ -601,7 +594,7 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                   value={formData.summary}
                   onChange={(e) => handleInputChange('summary', e.target.value)}
                   placeholder="e.g. Computer Science student passionate about building human-centered web applications..."
-                  className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none resize-none"
                 />
               </div>
             </div>
@@ -609,12 +602,12 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
           {activeFormTab === 'exp' && (
             <div className="space-y-4 pt-2">
-              <label className="block text-xs font-bold text-emerald-900">Work & Project Experience</label>
+              <label className="block text-xs font-mono font-black text-slate-950 uppercase">Work & Project Experience</label>
               <textarea
                 rows={5}
                 value={formData.experience}
                 onChange={(e) => handleInputChange('experience', e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none resize-none"
                 placeholder="Include internship roles, team projects, capstones, or student jobs..."
               />
             </div>
@@ -622,12 +615,12 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
           {activeFormTab === 'edu' && (
             <div className="space-y-4 pt-2">
-              <label className="block text-xs font-bold text-emerald-900">Education & Coursework</label>
+              <label className="block text-xs font-mono font-black text-slate-950 uppercase">Education & Coursework</label>
               <textarea
                 rows={4}
                 value={formData.education}
                 onChange={(e) => handleInputChange('education', e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none resize-none"
                 placeholder="University, degree, expected graduation date, GPA, relevant modules..."
               />
             </div>
@@ -635,12 +628,12 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
           {activeFormTab === 'skills' && (
             <div className="space-y-4 pt-2">
-              <label className="block text-xs font-bold text-emerald-900">Technical & Soft Skills</label>
+              <label className="block text-xs font-mono font-black text-slate-950 uppercase">Technical & Soft Skills</label>
               <textarea
                 rows={4}
                 value={formData.skills}
                 onChange={(e) => handleInputChange('skills', e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none resize-none"
                 placeholder="React, TypeScript, Python, Figma, Git, Communication..."
               />
             </div>
@@ -648,29 +641,29 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
           {activeFormTab === 'activities' && (
             <div className="space-y-4 pt-2">
-              <label className="block text-xs font-bold text-emerald-900">Activities, Clubs & Honors</label>
+              <label className="block text-xs font-mono font-black text-slate-950 uppercase">Activities, Clubs & Honors</label>
               <textarea
                 rows={4}
                 value={formData.activities}
                 onChange={(e) => handleInputChange('activities', e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl glass-input text-emerald-950 font-medium text-sm resize-none"
+                className="w-full px-3.5 py-2.5 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 font-mono text-sm focus:outline-none resize-none"
                 placeholder="Student club leadership, hackathon awards, volunteer work..."
               />
             </div>
           )}
 
           {/* Voice Assistant & AI Speech Categorizer */}
-          <div className="pt-4 border-t border-emerald-100 space-y-3">
+          <div className="pt-4 border-t-2 border-slate-200 space-y-3">
             <div className="flex items-center justify-between gap-4">
               <div>
-                <h3 className="font-bold text-emerald-950 text-sm flex items-center gap-2">
-                  <Mic className="w-4 h-4 text-emerald-600" />
+                <h3 className="font-black text-slate-950 text-sm flex items-center gap-2">
+                  <Mic className="w-4 h-4 text-slate-950" />
                   Voice Assistant Mode
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-mono font-bold">
-                    GEMINI AI POWERED
+                  <span className="px-2 py-0.5 rounded-md bg-amber-300 text-slate-950 text-[10px] font-mono font-black border border-slate-900">
+                    GEMINI AI
                   </span>
                 </h3>
-                <p className="text-xs text-emerald-800/80">
+                <p className="text-xs text-slate-600 font-medium">
                   Tap the mic to speak or type/paste spoken notes. Gemini will categorize and format them into your resume sections.
                 </p>
               </div>
@@ -678,10 +671,10 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               <button
                 type="button"
                 onClick={toggleListening}
-                className={`p-3 rounded-full transition-all duration-300 cursor-pointer shadow-md flex items-center justify-center shrink-0 ${
+                className={`w-11 h-11 rounded-lg border-2 border-slate-900 transition-all cursor-pointer active:translate-x-0.5 active:translate-y-0.5 flex items-center justify-center shrink-0 ${
                   isListening
-                    ? 'bg-rose-500 text-white animate-pulse ring-4 ring-rose-200'
-                    : 'bg-emerald-600 hover:bg-emerald-700 text-white'
+                    ? 'bg-rose-400 text-slate-950 animate-pulse ring-2 ring-slate-900'
+                    : 'bg-amber-300 hover:bg-amber-200 text-slate-950'
                 }`}
                 title={isListening ? 'Stop Listening' : 'Start Microphone Listening'}
               >
@@ -701,13 +694,13 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                       ? 'Listening to your voice live... Speak naturally about your degree, projects, or work history!'
                       : 'Speak via microphone above OR type/paste spoken background notes here (e.g. "I led a 4-person team in CS 160 to build an accessible study planner in React and Python")...'
                   }
-                  className="w-full p-3 pr-10 rounded-xl glass-input text-emerald-950 text-xs font-medium resize-none"
+                  className="w-full p-3 pr-14 rounded-xl border-2 border-slate-900 bg-slate-50 focus:bg-white text-slate-950 text-xs font-mono focus:outline-none resize-none"
                 />
                 {voiceTranscript && (
                   <button
                     type="button"
                     onClick={() => setVoiceTranscript('')}
-                    className="absolute top-2 right-2 p-1 text-emerald-600 hover:text-emerald-900 text-xs font-bold"
+                    className="absolute top-2 right-2 px-2 py-1 bg-white border border-slate-900 rounded text-slate-950 hover:bg-slate-100 text-xs font-mono font-black"
                   >
                     Clear
                   </button>
@@ -715,24 +708,24 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
               </div>
 
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="text-[11px] text-emerald-800 font-medium">
-                  {isListening ? '🔴 Recording live speech...' : 'Press button on right to analyze speech with AI:'}
+                <span className="text-[11px] font-mono text-slate-700 font-bold">
+                  {isListening ? '🔴 Recording live speech...' : 'Analyze speech notes:'}
                 </span>
 
                 <button
                   type="button"
                   onClick={() => handleProcessSpeechText()}
                   disabled={isProcessingAi || !voiceTranscript.trim()}
-                  className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-4 py-2 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 text-xs font-mono font-black border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isProcessingAi ? (
                     <>
-                      <Sparkles className="w-3.5 h-3.5 animate-spin text-emerald-200" />
+                      <Sparkles className="w-3.5 h-3.5 animate-spin text-slate-950" />
                       Gemini Categorizing...
                     </>
                   ) : (
                     <>
-                      <Wand2 className="w-3.5 h-3.5" />
+                      <Wand2 className="w-3.5 h-3.5 text-slate-950" />
                       Categorize with Gemini AI
                     </>
                   )}
@@ -742,38 +735,35 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
             {/* Feedback messages */}
             {aiSummaryMessage && (
-              <div className="p-3 rounded-xl bg-emerald-100 text-xs font-semibold text-emerald-950 border border-emerald-300 flex items-center gap-2 animate-in fade-in">
-                <Sparkles className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="p-3 rounded-lg bg-emerald-100 text-xs font-mono font-bold text-slate-950 border-2 border-slate-900 flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-emerald-700 shrink-0" />
                 <span>{aiSummaryMessage}</span>
               </div>
             )}
 
             {speechError && (
-              <div className="p-3 rounded-xl bg-amber-100/90 text-xs font-medium text-amber-950 border border-amber-300">
+              <div className="p-3 rounded-lg bg-amber-100 text-xs font-mono font-bold text-slate-950 border-2 border-slate-900">
                 {speechError}
               </div>
             )}
           </div>
 
-        </motion.div>
+        </div>
 
         {/* Right Column: Customization & Live Generation */}
         <div className="lg:col-span-5 space-y-6">
           
           {/* Layout Selector */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="glass-panel rounded-3xl p-6 border border-white/90 shadow-xl space-y-4"
+          <div 
+            className="rounded-xl p-6 border-2 border-slate-900 bg-white space-y-4"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-lg bg-slate-950 text-amber-300 border-2 border-slate-900 flex items-center justify-center font-mono font-black ">
                 <Layout className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-bold text-emerald-950 text-lg">2. Choose a layout</h3>
-                <p className="text-emerald-800/70 text-xs font-medium">Four Google Docs inspired resume layouts.</p>
+                <h3 className="font-black text-slate-950 text-lg">2. Choose a layout</h3>
+                <p className="text-slate-600 text-xs font-medium">Four Google Docs inspired resume layouts.</p>
               </div>
             </div>
 
@@ -784,43 +774,40 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                   <button
                     key={l.id}
                     onClick={() => setSelectedLayout(l.id)}
-                    className={`p-3 rounded-2xl border text-left transition-all cursor-pointer flex flex-col gap-2 ${
+                    className={`p-3 rounded-xl border-2 border-slate-900 text-left transition-all cursor-pointer flex flex-col gap-2 ${
                       isSelected
-                        ? 'bg-emerald-50/90 border-emerald-500 ring-2 ring-emerald-500/20 shadow-md'
-                        : 'bg-white/60 border-emerald-100 hover:bg-white/90'
+                        ? 'bg-amber-100 ring-2 ring-slate-900'
+                        : 'bg-white hover:bg-slate-50 '
                     }`}
                   >
-                    <div className="w-full h-12 rounded-lg bg-emerald-100/50 p-2 flex flex-col gap-1 overflow-hidden relative">
+                    <div className="w-full h-12 rounded-lg bg-slate-100 border border-slate-900 p-2 flex flex-col gap-1 overflow-hidden relative">
                       <div className={`h-2 rounded ${l.iconBg} w-1/3`} />
-                      <div className="h-1 rounded bg-emerald-300/60 w-3/4" />
-                      <div className="h-1 rounded bg-emerald-200/50 w-1/2" />
+                      <div className="h-1 rounded bg-slate-400 w-3/4" />
+                      <div className="h-1 rounded bg-slate-300 w-1/2" />
                       {isSelected && (
-                        <div className="absolute top-1 right-1 w-4 h-4 bg-emerald-600 text-white rounded-full flex items-center justify-center text-[10px]">
+                        <div className="absolute top-1 right-1 w-4 h-4 bg-slate-950 text-amber-300 rounded-full flex items-center justify-center text-[10px] font-bold">
                           ✓
                         </div>
                       )}
                     </div>
-                    <span className="font-bold text-xs text-emerald-950">{l.name}</span>
+                    <span className="font-black text-xs text-slate-950">{l.name}</span>
                   </button>
                 );
               })}
             </div>
-          </motion.div>
+          </div>
 
           {/* Color Accent Picker */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="glass-panel rounded-3xl p-6 border border-white/90 shadow-xl space-y-4"
+          <div 
+            className="rounded-xl p-6 border-2 border-slate-900 bg-white space-y-4"
           >
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-lg bg-slate-950 text-amber-300 border-2 border-slate-900 flex items-center justify-center font-mono font-black ">
                 <Palette className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="font-bold text-emerald-950 text-lg">3. Pick accent color</h3>
-                <p className="text-emerald-800/70 text-xs font-medium">Style section headers & borders.</p>
+                <h3 className="font-black text-slate-950 text-lg">3. Pick accent color</h3>
+                <p className="text-slate-600 text-xs font-medium">Style section headers & borders.</p>
               </div>
             </div>
 
@@ -831,8 +818,8 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                   <button
                     key={c.id}
                     onClick={() => setSelectedColor(c.hex)}
-                    className={`w-9 h-9 rounded-full flex items-center justify-center transition-transform cursor-pointer ${
-                      isSelected ? 'scale-110 ring-2 ring-emerald-600 ring-offset-2' : 'hover:scale-105'
+                    className={`w-9 h-9 rounded-lg border-2 border-slate-900 flex items-center justify-center transition-all cursor-pointer ${
+                      isSelected ? 'scale-110 ring-2 ring-slate-900' : 'hover:scale-105'
                     }`}
                     style={{ backgroundColor: c.hex }}
                     title={c.name}
@@ -842,35 +829,32 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                 );
               })}
             </div>
-          </motion.div>
+          </div>
 
           {/* Generate CTA Box */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="glass-panel rounded-3xl p-6 border border-white/90 shadow-xl space-y-4 bg-gradient-to-br from-emerald-100/60 to-white/90"
+          <div 
+            className="rounded-xl p-6 border-2 border-slate-900 space-y-4 bg-amber-50"
           >
             <div className="space-y-1">
-              <h3 className="font-bold text-emerald-950 text-base">Ready to review?</h3>
-              <p className="text-xs text-emerald-800">Generate your formatted resume instantly and export as PDF.</p>
+              <h3 className="font-black text-slate-950 text-base">Ready to review?</h3>
+              <p className="text-xs text-slate-700 font-medium">Generate your formatted resume instantly and export as PDF.</p>
             </div>
 
             <button
               onClick={() => setShowGenerateModal(true)}
-              className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all duration-300 shadow-xl shadow-emerald-600/20 hover:shadow-2xl flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-4 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black font-mono text-base border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Wand2 className="w-5 h-5" />
+              <Wand2 className="w-5 h-5 text-slate-950" />
               Generate Resume
             </button>
 
             <button
               onClick={onGoToTailor}
-              className="w-full py-2.5 text-center text-xs font-bold text-emerald-800 hover:text-emerald-950 transition-colors"
+              className="w-full py-2.5 text-center text-xs font-mono font-black text-slate-950 hover:underline"
             >
               Want to match a specific job posting? Try Tailor →
             </button>
-          </motion.div>
+          </div>
 
         </div>
 
@@ -878,70 +862,70 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
 
       {/* Generated Resume Modal */}
       {showGenerateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/40 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-3xl glass-panel rounded-3xl p-6 sm:p-8 border border-white/90 shadow-2xl bg-white/95 space-y-6 max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70">
+          <div className="relative w-full max-w-3xl rounded-xl p-6 sm:p-8 border-4 border-slate-900 bg-white space-y-6 max-h-[90vh] overflow-y-auto">
             
-            <div className="flex justify-between items-center pb-4 border-b border-emerald-100">
+            <div className="flex justify-between items-center pb-4 border-b-2 border-slate-200">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-emerald-600" />
-                <h3 className="font-extrabold text-emerald-950 text-xl">
+                <Sparkles className="w-5 h-5 text-slate-950" />
+                <h3 className="font-black text-slate-950 text-xl">
                   {formData.name}'s Resume ({selectedLayout} Layout)
                 </h3>
               </div>
               <button
                 onClick={() => setShowGenerateModal(false)}
-                className="p-2 rounded-xl text-emerald-800 hover:bg-emerald-100/60 transition-colors cursor-pointer"
+                className="p-1.5 rounded-lg border-2 border-slate-900 text-slate-950 hover:bg-slate-100 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Resume Sheet */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 border border-emerald-200 shadow-sm font-sans space-y-5 text-left text-xs sm:text-sm text-emerald-950">
+            <div className="bg-white rounded-lg p-6 sm:p-8 border-2 border-slate-900 font-sans space-y-5 text-left text-xs sm:text-sm text-slate-950">
               <div className="border-b-2 pb-3" style={{ borderColor: selectedColor }}>
                 <h2 className="text-2xl font-black tracking-tight uppercase" style={{ color: selectedColor }}>
                   {formData.name}
                 </h2>
-                <p className="text-xs text-emerald-800 mt-1 font-medium">
+                <p className="text-xs text-slate-700 mt-1 font-mono font-medium">
                   {formData.email} • {formData.phone} • {formData.location} • {formData.linkedin}
                 </p>
-                <p className="text-xs text-emerald-900 mt-2 font-normal">
+                <p className="text-xs text-slate-800 mt-2 font-normal leading-relaxed">
                   {formData.summary}
                 </p>
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider border-b pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
+                <h4 className="text-xs font-black font-mono uppercase tracking-wider border-b-2 pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
                   Education
                 </h4>
-                <p className="text-xs text-emerald-950">{formData.education}</p>
+                <p className="text-xs text-slate-900">{formData.education}</p>
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider border-b pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
+                <h4 className="text-xs font-black font-mono uppercase tracking-wider border-b-2 pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
                   Experience & Projects
                 </h4>
-                <p className="text-xs text-emerald-950 leading-relaxed">{formData.experience}</p>
+                <p className="text-xs text-slate-900 leading-relaxed">{formData.experience}</p>
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider border-b pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
+                <h4 className="text-xs font-black font-mono uppercase tracking-wider border-b-2 pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
                   Skills & Tools
                 </h4>
-                <p className="text-xs text-emerald-950">{formData.skills}</p>
+                <p className="text-xs text-slate-900">{formData.skills}</p>
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider border-b pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
+                <h4 className="text-xs font-black font-mono uppercase tracking-wider border-b-2 pb-1 mb-2" style={{ color: selectedColor, borderColor: `${selectedColor}40` }}>
                   Activities & Honors
                 </h4>
-                <p className="text-xs text-emerald-950">{formData.activities}</p>
+                <p className="text-xs text-slate-900">{formData.activities}</p>
               </div>
             </div>
 
             {/* Modal Footer Actions */}
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-              <div className="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1.5 rounded-full">
+              <div className="text-xs font-mono font-black text-slate-950 bg-amber-300 border-2 border-slate-900 px-3 py-1.5 rounded-md ">
                 ✓ ATS Formatted • Single Page Certified
               </div>
 
@@ -951,9 +935,9 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                     setCopiedText(true);
                     setTimeout(() => setCopiedText(false), 2000);
                   }}
-                  className="px-4 py-2.5 rounded-xl glass-panel text-xs font-bold text-emerald-950 hover:bg-white transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2.5 rounded-lg bg-white text-xs font-mono font-black text-slate-950 border-2 border-slate-900 hover:bg-slate-100 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-1.5 cursor-pointer"
                 >
-                  {copiedText ? <Check className="w-4 h-4 text-emerald-600" /> : <Printer className="w-4 h-4 text-emerald-600" />}
+                  {copiedText ? <Check className="w-4 h-4 text-emerald-600" /> : <Printer className="w-4 h-4 text-slate-950" />}
                   {copiedText ? 'Copied' : 'Copy Text'}
                 </button>
 
@@ -963,9 +947,9 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                       setShowGenerateModal(false);
                       handleCoach();
                     }}
-                    className="px-4 py-2.5 rounded-xl bg-teal-100 hover:bg-teal-200 text-teal-950 font-bold text-xs transition-all flex items-center gap-1.5 cursor-pointer border border-teal-200"
+                    className="px-4 py-2.5 rounded-lg bg-amber-300 hover:bg-amber-200 text-slate-950 font-mono font-black text-xs transition-all flex items-center gap-1.5 cursor-pointer border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5"
                   >
-                    <Sparkles className="w-4 h-4 text-teal-700" />
+                    <Sparkles className="w-4 h-4 text-slate-950" />
                     Practice with Coach
                   </button>
                 )}
@@ -975,9 +959,9 @@ export const ResumakerTab: React.FC<ResumakerTabProps> = ({ onBackToHome, onGoTo
                     window.print();
                     setShowGenerateModal(false);
                   }}
-                  className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-6 py-2.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-mono font-black text-xs border-2 border-slate-900 active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <Download className="w-4 h-4" />
+                  <Download className="w-4 h-4 text-slate-950" />
                   Print / Save PDF
                 </button>
               </div>

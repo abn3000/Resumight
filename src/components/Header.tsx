@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
 import { NavTab } from '../types';
-import { Sparkles, Menu, X, ArrowRight } from 'lucide-react';
+import { Sparkles, Menu, X } from 'lucide-react';
 
 interface HeaderProps {
   activeTab: NavTab;
   setActiveTab: (tab: NavTab) => void;
-  onCtaClick: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onCtaClick }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems: { id: NavTab; label: string }[] = [
     { id: 'home', label: 'Home' },
-    { id: 'about', label: 'About' },
     { id: 'resumaker', label: 'Resumaker' },
     { id: 'tailor', label: 'Tailor' },
     { id: 'coach', label: 'Coach' },
@@ -28,103 +26,73 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onCtaCl
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full px-4 sm:px-8 py-3 transition-all duration-300">
-      <div className="max-w-7xl mx-auto rounded-2xl glass-panel px-6 py-3.5 flex items-center justify-between border border-emerald-200/60 shadow-sm backdrop-blur-xl bg-white/80">
+    <header className="sticky top-0 z-50 w-full px-4 sm:px-8 py-3">
+      <div className="max-w-7xl mx-auto rounded-md px-5 py-3 flex items-center justify-between border-2 border-slate-900 bg-white">
         
         {/* Brand Logo */}
         <button 
           onClick={() => handleTabClick('home')} 
           className="flex items-center gap-2.5 text-left group cursor-pointer focus:outline-none"
         >
-          <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-sm shadow-emerald-600/20 group-hover:scale-105 transition-transform">
-            <Sparkles className="w-5 h-5 text-emerald-100" />
+          <div className="w-9 h-9 rounded-sm bg-emerald-400 text-slate-950 border-2 border-slate-900 flex items-center justify-center font-black text-lg">
+            <Sparkles className="w-5 h-5 text-slate-950 fill-slate-950" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xl sm:text-2xl font-black tracking-wider text-emerald-950 uppercase font-sans">
+            <span className="text-xl sm:text-2xl font-black tracking-wider text-slate-900 uppercase">
               RESUMIGHT
             </span>
-            <span className="hidden sm:inline-flex items-center text-[10px] font-mono font-bold text-emerald-800 bg-emerald-100/90 border border-emerald-300/70 px-2 py-0.5 rounded-md tracking-wider uppercase">
-              student built
+            <span className="inline-flex items-center text-[10px] font-bold text-slate-900 bg-amber-300 border-2 border-slate-900 px-2 py-0.5 rounded-sm tracking-wider uppercase">
+              student project
             </span>
           </div>
         </button>
 
         {/* Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 bg-emerald-100/60 p-1.5 rounded-full border border-emerald-200/60">
+        <nav className="hidden md:flex items-center gap-1.5 bg-slate-100 p-1 rounded-sm border-2 border-slate-900">
           {navItems.map((item) => {
             const isActive = activeTab === item.id || (item.id === 'coach' && activeTab === 'prep');
             return (
               <button
                 key={item.id}
                 onClick={() => handleTabClick(item.id)}
-                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-200 relative cursor-pointer ${
+                className={`px-4 py-1.5 rounded-sm text-xs font-bold transition-colors cursor-pointer ${
                   isActive
-                    ? 'text-emerald-950 bg-white shadow-sm shadow-emerald-900/10 font-bold'
-                    : 'text-emerald-800/70 hover:text-emerald-950 hover:bg-white/40'
+                    ? 'text-slate-950 bg-emerald-300 border-2 border-slate-900'
+                    : 'text-slate-700 hover:text-slate-950 hover:bg-slate-200 border-2 border-transparent'
                 }`}
               >
                 {item.label}
-                {isActive && (
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-emerald-600 rounded-full" />
-                )}
               </button>
             );
           })}
         </nav>
 
-        {/* Right CTA Button */}
-        <div className="hidden md:flex items-center gap-3">
-          <button
-            onClick={() => {
-              setActiveTab('resumaker');
-              onCtaClick();
-            }}
-            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-all duration-200 shadow-md shadow-emerald-600/20 hover:shadow-lg hover:shadow-emerald-600/30 active:scale-95 flex items-center gap-2 cursor-pointer"
-          >
-            Create Resume
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-
         {/* Mobile Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-xl text-emerald-900 hover:bg-emerald-100/50 transition-colors"
+          className="md:hidden p-2 rounded-sm border-2 border-slate-900 bg-slate-100 text-slate-900"
           aria-label="Toggle menu"
         >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden mt-2 max-w-7xl mx-auto rounded-2xl glass-panel p-5 border border-white/80 bg-white/90 shadow-xl flex flex-col gap-3 animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden mt-2 max-w-7xl mx-auto rounded-sm p-4 border-2 border-slate-900 bg-white flex flex-col gap-2">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => handleTabClick(item.id)}
-              className={`text-left px-4 py-3 rounded-xl font-medium text-base transition-colors ${
+              className={`text-left px-4 py-2.5 rounded-sm font-bold text-sm border-2 transition-colors ${
                 activeTab === item.id || (item.id === 'coach' && activeTab === 'prep')
-                  ? 'bg-emerald-100/70 text-emerald-950 font-bold border border-emerald-200'
-                  : 'text-emerald-800 hover:bg-emerald-50'
+                  ? 'bg-emerald-300 border-slate-900 text-slate-950'
+                  : 'border-transparent text-slate-700 hover:bg-slate-100'
               }`}
             >
               {item.label}
             </button>
           ))}
-          <div className="pt-2 border-t border-emerald-100">
-            <button
-              onClick={() => {
-                setActiveTab('resumaker');
-                setMobileMenuOpen(false);
-                onCtaClick();
-              }}
-              className="w-full py-3 rounded-xl bg-emerald-600 text-white font-semibold text-center shadow-md flex items-center justify-center gap-2"
-            >
-              Build your resume
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
         </div>
       )}
     </header>

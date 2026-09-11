@@ -60,9 +60,9 @@ export const BlankSection: React.FC<BlankSectionProps> = ({ section, onBackToHom
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="max-w-2xl w-full glass-panel rounded-3xl p-8 sm:p-12 border border-white/90 shadow-2xl text-center space-y-6 backdrop-blur-2xl bg-white/70"
+        className="max-w-2xl w-full glass-panel rounded-3xl p-8 sm:p-12 border border-white/90 text-center space-y-6 backdrop-blur-2xl bg-white/70"
       >
-        <div className="w-16 h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-lg shadow-emerald-600/20">
+        <div className="w-16 h-16 rounded-2xl bg-emerald-600 text-white flex items-center justify-center mx-auto shadow-emerald-600/20">
           <Icon className="w-8 h-8" />
         </div>
 
@@ -90,7 +90,7 @@ export const BlankSection: React.FC<BlankSectionProps> = ({ section, onBackToHom
                 setTimeout(() => onJumpToSection(info.anchorId!), 100);
               }
             }}
-            className="px-6 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center gap-2 cursor-pointer"
+            className="px-6 py-3.5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-emerald-600/20 transition-all flex items-center gap-2 cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
             {info.actionLabel}
